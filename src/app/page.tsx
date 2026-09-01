@@ -43,17 +43,17 @@ export default function Home() {
             </div>
 
             <div className="flex flex-1 flex-col p-8">
-              <h2 className="text-xl font-medium tracking-tight mb-3 text-white">
+              <h2 className="text-xl font-medium tracking-tight mb-4 text-white">
                 {project.title}
               </h2>
               <p className="text-base leading-relaxed mb-6 text-zinc-400">
                 {project.description}
               </p>
-              <ul className="flex flex-wrap gap-3 mt-auto">
+              <ul className="flex flex-wrap gap-4 mt-auto">
                 {project.tags.map((tag) => (
                   <li
                     key={tag}
-                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-white/10 text-white"
+                    className="text-xs font-medium px-4 py-2 rounded-full bg-white/10 text-white"
                   >
                     {tag}
                   </li>
