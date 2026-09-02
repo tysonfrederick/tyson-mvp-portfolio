@@ -9,21 +9,21 @@ export const portfolioData = {
         id: "biofilm-sim",
         title: "Interactive 3D Mechanical Simulation",
         description: "Translated engineering schematics into high-fidelity 3D visual prototypes in Unreal Engine 4.",
-        videoPath: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        imagePath: "/sim.png",
         tags: ["Unreal Engine 4", "Blender", "3D Simulation"]
       },
       {
         id: "generative-art",
         title: "Algorithmic Generative Media",
         description: "Interactive installations driven by computer vision (OpenNI/Kinect) and real-time algorithmic generation.",
-        videoPath: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        imagePath: "/theta-2.jpg",
         tags: ["Processing", "Computer Vision", "Systems Architecture"]
       },
       {
         id: "foodshare-ecosystem",
         title: "Multi-Sided Cyber-Physical Logistics",
         description: "Architected a 4-sided value exchange ecosystem mapping donors, volunteers, and distribution nodes.",
-        videoPath: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        imagePath: "/foodshare.png",
         tags: ["Systems Architecture", "Logistics", "Product Strategy"]
       }
     ]

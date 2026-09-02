@@ -1,66 +1,97 @@
+import Image from "next/image";
 import { portfolioData } from "./data";
+
+type Project = (typeof portfolioData.projects)[number];
+
+function ProjectCard({
+  project,
+  featured = false,
+}: {
+  project: Project;
+  featured?: boolean;
+}) {
+  return (
+    <article
+      className={`flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 transition-colors duration-300 hover:border-white/20 ${
+        featured ? "md:col-span-2" : ""
+      }`}
+    >
+      <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
+        <div className="absolute inset-0 animate-pulse bg-zinc-800" aria-hidden />
+        <Image
+          src={project.imagePath}
+          alt={project.title}
+          fill
+          className={`object-cover${
+            project.imagePath.includes("foodshare") ? " invert" : ""
+          }`}
+          sizes={
+            featured
+              ? "(min-width: 768px) 80vw, 100vw"
+              : "(min-width: 768px) 40vw, 100vw"
+          }
+        />
+      </div>
+
+      <div className="flex flex-1 flex-col p-8">
+        <h2
+          className={`font-medium tracking-tight text-white ${
+            featured ? "mb-4 text-2xl md:text-3xl" : "mb-4 text-xl"
+          }`}
+        >
+          {project.title}
+        </h2>
+        <p className="mb-6 text-base leading-relaxed text-zinc-400">
+          {project.description}
+        </p>
+        <ul className="mt-auto flex flex-wrap gap-4">
+          {project.tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full bg-white/10 px-4 py-2 text-xs font-medium text-white"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </article>
+  );
+}
 
 export default function Home() {
   const { hero, projects } = portfolioData;
+  const [featured, ...rest] = projects;
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32 font-sans">
+    <main className="mx-auto min-h-screen max-w-7xl px-6 py-24 font-sans md:px-12 md:py-32">
       <header>
-        <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-white">
+        <Image
+          src="/tf-logo.png"
+          alt="Tyson Frederick"
+          width={48}
+          height={48}
+          priority
+          className="mb-8 h-12 w-12"
+        />
+        <h1 className="text-5xl font-bold tracking-tight text-white md:text-7xl">
           {hero.title}
         </h1>
-        <p className="text-xl md:text-2xl font-medium tracking-tight mt-4 text-white">
+        <p className="mt-4 text-xl font-medium tracking-tight text-white md:text-2xl">
           {hero.subtitle}
         </p>
-        <p className="text-base md:text-lg max-w-2xl mt-6 leading-relaxed text-zinc-400">
+        <p className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg">
           {hero.description}
         </p>
       </header>
 
       <section
         aria-label="Projects"
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-24"
+        className="mt-24 grid grid-cols-1 gap-8 md:grid-cols-2 md:grid-rows-2 md:gap-12"
       >
-        {projects.map((project) => (
-          <article
-            key={project.id}
-            className="flex flex-col overflow-hidden bg-zinc-900/50 border border-white/10 rounded-2xl"
-          >
-            <div className="aspect-video relative w-full overflow-hidden bg-zinc-900">
-              <div
-                className="absolute inset-0 animate-pulse bg-zinc-800"
-                aria-hidden
-              />
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                src={project.videoPath}
-                aria-hidden
-                className="relative object-cover w-full h-full"
-              />
-            </div>
-
-            <div className="flex flex-1 flex-col p-8">
-              <h2 className="text-xl font-medium tracking-tight mb-4 text-white">
-                {project.title}
-              </h2>
-              <p className="text-base leading-relaxed mb-6 text-zinc-400">
-                {project.description}
-              </p>
-              <ul className="flex flex-wrap gap-4 mt-auto">
-                {project.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="text-xs font-medium px-4 py-2 rounded-full bg-white/10 text-white"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </article>
+        <ProjectCard key={featured.id} project={featured} featured />
+        {rest.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
       </section>
     </main>
