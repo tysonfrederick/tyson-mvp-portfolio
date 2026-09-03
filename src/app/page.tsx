@@ -12,7 +12,7 @@ function ProjectCard({
 }) {
   return (
     <article
-      className={`flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 transition-colors duration-300 hover:border-white/20 ${
+      className={`flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 transition-colors duration-300 hover:border-white/20 ${
         featured ? "md:col-span-2" : ""
       }`}
     >
@@ -33,18 +33,18 @@ function ProjectCard({
         />
       </div>
 
-      <div className="flex flex-1 flex-col p-8">
+      <div className="flex flex-col gap-4 p-8">
         <h2
           className={`font-medium tracking-tight text-white ${
-            featured ? "mb-4 text-2xl md:text-3xl" : "mb-4 text-xl"
+            featured ? "text-2xl md:text-3xl" : "text-xl"
           }`}
         >
           {project.title}
         </h2>
-        <p className="mb-6 text-base leading-relaxed text-zinc-400">
+        <p className="text-base leading-relaxed text-zinc-400">
           {project.description}
         </p>
-        <ul className="mt-auto flex flex-wrap gap-4">
+        <ul className="flex flex-wrap gap-4">
           {project.tags.map((tag) => (
             <li
               key={tag}
@@ -87,7 +87,7 @@ export default function Home() {
 
       <section
         aria-label="Projects"
-        className="mt-24 grid grid-cols-1 gap-8 md:grid-cols-2 md:grid-rows-2 md:gap-12"
+        className="mt-24 grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12"
       >
         <ProjectCard key={featured.id} project={featured} featured />
         {rest.map((project) => (
