@@ -33,7 +33,7 @@ export const portfolioData: PortfolioData = {
       role: "Lead Creative Technologist & 3D Modeler",
       description:
         "Translated engineering schematics into high-fidelity 3D visual prototypes in Unreal Engine 4.",
-      videoSrc: "/videos/sim-loop.mp4",
+      videoSrc: "/videos/sim-intro.mp4",
       imagePath: "/sim.png",
       tags: ["Unreal Engine 4", "Blender", "3D Simulation"],
     },
