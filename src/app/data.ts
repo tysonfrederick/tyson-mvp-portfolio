@@ -68,7 +68,7 @@ export const portfolioData: PortfolioData = {
       description:
         "Engineered a physical computing accessory targeting repetitive tendon strain, validating rapid iterations from foam models to 3D prints.",
       videoSrc: "/videos/ergoclick-loop.mp4",
-      imagePath: "/foodshare.png",
+      imagePath: "/ergoclick.jpg",
       tags: ["Hardware Prototyping", "Biomechanics", "Business Strategy"],
     },
   ],

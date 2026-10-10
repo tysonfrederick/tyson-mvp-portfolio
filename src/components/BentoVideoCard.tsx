@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -11,10 +11,28 @@ type BentoVideoCardProps = {
 };
 
 export default function BentoVideoCard({ project }: BentoVideoCardProps) {
-  const [videoFailed, setVideoFailed] = useState(false);
-  const invertFallback = project.imagePath.includes("foodshare");
-  const mediaClassName = `absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105${
-    invertFallback && videoFailed ? " invert" : ""
+  const [videoReady, setVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const markReady = () => {
+      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        setVideoReady(true);
+      }
+    };
+
+    markReady();
+    video.addEventListener("canplay", markReady);
+    return () => video.removeEventListener("canplay", markReady);
+  }, [project.videoSrc]);
+  const invertFallback = project.imagePath.includes("foodshare") && !videoReady;
+  const objectPosition =
+    project.id === "ergoclick" ? "object-[85%_center]" : "object-center";
+  const mediaClassName = `absolute inset-0 h-full w-full object-cover ${objectPosition} transition-transform duration-700 ease-out group-hover:scale-105${
+    invertFallback ? " invert" : ""
   }`;
 
   const card = (
@@ -26,27 +44,30 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#090D16] transition-all duration-300 hover:-translate-y-1 hover:border-white/30"
     >
       <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-black md:aspect-video">
-        {videoFailed ? (
-          <Image
-            src={project.imagePath}
-            alt={project.title}
-            fill
-            className={mediaClassName}
-            sizes="(min-width: 768px) 50vw, 100vw"
-          />
-        ) : (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={project.imagePath}
-            src={project.videoSrc}
-            onError={() => setVideoFailed(true)}
-            aria-hidden
-            className={mediaClassName}
-          />
-        )}
+        <Image
+          src={project.imagePath}
+          alt={project.title}
+          fill
+          className={mediaClassName}
+          sizes="(min-width: 768px) 50vw, 100vw"
+        />
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={project.imagePath}
+          src={project.videoSrc}
+          onCanPlay={() => setVideoReady(true)}
+          onError={() => setVideoReady(false)}
+          aria-hidden
+          className={
+            videoReady
+              ? mediaClassName
+              : "pointer-events-none absolute h-px w-px opacity-0"
+          }
+        />
       </div>
 
       <div className="z-10 flex flex-col gap-3 p-4 md:p-6">
