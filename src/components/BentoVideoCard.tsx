@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Project } from "@/app/data";
 
@@ -16,13 +17,13 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
     invertFallback && videoFailed ? " invert" : ""
   }`;
 
-  return (
+  const card = (
     <motion.article
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#090D16] transition-all duration-300 hover:-translate-y-1 hover:border-white/30"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#090D16] transition-all duration-300 hover:-translate-y-1 hover:border-white/30"
     >
       <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-black md:aspect-video">
         {videoFailed ? (
@@ -68,5 +69,18 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
         </ul>
       </div>
     </motion.article>
+  );
+
+  if (!project.slug) {
+    return card;
+  }
+
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="block h-full rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+    >
+      {card}
+    </Link>
   );
 }

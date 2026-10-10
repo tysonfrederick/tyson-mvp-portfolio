@@ -12,6 +12,8 @@ export interface Project {
   videoSrc: string;
   imagePath: string;
   tags: string[];
+  /** Case-study slug. Present only when `/projects/[slug]` exists. */
+  slug?: string;
 }
 
 export interface PortfolioData {
@@ -36,6 +38,7 @@ export const portfolioData: PortfolioData = {
       videoSrc: "/videos/sim.mp4",
       imagePath: "/sim.png",
       tags: ["Unreal Engine 4", "Blender", "3D Simulation"],
+      slug: "simulation",
     },
     {
       id: "generative-art",
