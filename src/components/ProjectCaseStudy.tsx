@@ -44,9 +44,9 @@ function MetaField({ label, value }: { label: string; value: string }) {
 export default function ProjectCaseStudy({ study }: ProjectCaseStudyProps) {
   const meta = [
     { label: "Role", value: study.role },
-    { label: "Client", value: study.client },
+    { label: study.clientLabel ?? "Client", value: study.client },
     { label: "Timeline", value: study.timeline },
-    { label: "Effort", value: study.effort },
+    { label: study.effortLabel ?? "Effort", value: study.effort },
   ];
 
   return (
@@ -114,7 +114,7 @@ export default function ProjectCaseStudy({ study }: ProjectCaseStudyProps) {
         <article className="flex flex-col gap-16 lg:col-span-2">
           <section>
             <h2 className="text-2xl font-medium tracking-tight text-white md:text-3xl">
-              The Challenge
+              {study.challengeHeading ?? "The Challenge"}
             </h2>
             <div className="mt-6 flex flex-col gap-6">
               {study.challenge.map((paragraph) => (

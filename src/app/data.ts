@@ -42,13 +42,14 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: "generative-art",
-      title: "Algorithmic Generative Media",
-      role: "Interactive Systems Lead",
+      title: "Algorithmic Art Systems",
+      role: "MFA Researcher, Lead Interactive Systems Designer",
       description:
-        "Interactive installations driven by computer vision (OpenNI/Kinect) and real-time algorithmic generation.",
+        "Three-year CADRE research. Generative rules in Processing and ActionScript, defended in committee and shown in public with the source beside the image.",
       videoSrc: "/videos/mfa-generative.mp4",
       imagePath: "/theta-2.jpg",
-      tags: ["Processing", "Computer Vision", "Systems Architecture"],
+      tags: ["Processing", "ActionScript 3.0", "Kinect"],
+      slug: "algorithmic-art-systems",
     },
     {
       id: "foodshare-ecosystem",
