@@ -40,6 +40,8 @@ export interface CaseStudy {
   outcome: string[];
 }
 
+export const mfaThesisSlug = "algorithmic-art-systems";
+
 const simulationStill: Pick<CaseStudyImage, "src" | "width" | "height"> = {
   src: "/sim.png",
   width: 3292,
@@ -150,7 +152,7 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    slug: "algorithmic-art-systems",
+    slug: mfaThesisSlug,
     title:
       "Algorithmic Art Systems: Early Research in Creative AI Interaction",
     summary:

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { CaseStudy, CaseStudyImage } from "@/app/projects/studies";
+import ProjectStudyFrame from "@/components/ProjectStudyFrame";
 
 type ProjectCaseStudyProps = {
   study: CaseStudy;
@@ -41,7 +41,7 @@ function MetaField({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default function ProjectCaseStudy({ study }: ProjectCaseStudyProps) {
+export function CaseStudyBody({ study }: { study: CaseStudy }) {
   const meta = [
     { label: "Role", value: study.role },
     { label: study.clientLabel ?? "Client", value: study.client },
@@ -50,25 +50,10 @@ export default function ProjectCaseStudy({ study }: ProjectCaseStudyProps) {
   ];
 
   return (
-    <main className="mx-auto min-h-screen max-w-7xl px-6 py-24 font-sans md:px-12 md:py-32">
-      <Link href="/" className="mb-8 inline-block">
-        <Image
-          src="/tf-logo.png"
-          alt="Tyson Frederick"
-          width={48}
-          height={48}
-          className="h-12 w-12"
-        />
-      </Link>
-
-      <header>
-        <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-white md:text-6xl">
-          {study.title}
-        </h1>
-        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-400 md:text-xl">
-          {study.summary}
-        </p>
-      </header>
+    <>
+      <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-400 md:text-xl">
+        {study.summary}
+      </p>
 
       <div className="mt-12">
         <StudyImage
@@ -214,6 +199,14 @@ export default function ProjectCaseStudy({ study }: ProjectCaseStudyProps) {
           </section>
         </article>
       </div>
-    </main>
+    </>
+  );
+}
+
+export default function ProjectCaseStudy({ study }: ProjectCaseStudyProps) {
+  return (
+    <ProjectStudyFrame title={study.title}>
+      <CaseStudyBody study={study} />
+    </ProjectStudyFrame>
   );
 }

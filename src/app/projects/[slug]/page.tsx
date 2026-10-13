@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import ProjectCaseStudy from "@/components/ProjectCaseStudy";
-import { getCaseStudy, getCaseStudyParams } from "../studies";
+import ProjectCaseStudy, {
+  CaseStudyBody,
+} from "@/components/ProjectCaseStudy";
+import MfaProjectArchive from "@/components/thesis/MfaProjectArchive";
+import ThesisViewer from "@/components/thesis/ThesisViewer";
+import { getCaseStudy, getCaseStudyParams, mfaThesisSlug } from "../studies";
 
 export function generateStaticParams() {
   return getCaseStudyParams();
@@ -31,6 +35,16 @@ export default async function ProjectPage({
 
   if (!study) {
     notFound();
+  }
+
+  if (study.slug === mfaThesisSlug) {
+    return (
+      <MfaProjectArchive
+        title={study.title}
+        executive={<CaseStudyBody study={study} />}
+        archive={<ThesisViewer />}
+      />
+    );
   }
 
   return <ProjectCaseStudy study={study} />;
