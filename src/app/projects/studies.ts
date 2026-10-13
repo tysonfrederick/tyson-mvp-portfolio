@@ -242,28 +242,28 @@ const caseStudies: CaseStudy[] = [
       "Academic publishing, editorial curation, and digital archiving for the CADRE Laboratory for New Media.",
     hero: {
       src: "/switch-issue-28-hero.jpg",
-      alt: "SWITCH Issue 28 masthead and staff list, naming Tyson Frederick as Assistant Editor and head of Process",
-      width: 672,
-      height: 510,
+      alt: "SWITCH Issue 28 masthead and staff list, naming Tyson Frederick as Assistant Editor, head of Process, and Web Development",
+      width: 1960,
+      height: 2956,
       caption:
-        "Issue 28 masthead and staff, through Process: The Pixels of an Image.",
+        "Issue 28 masthead and staff. Assistant Editor, Process: The Pixels of an Image, and Web Development.",
     },
     interstitial: {
       src: "/switch-issue-28-article.jpg",
       afterPhaseId: "3",
       alt: "Published essay A Human's Job by Tyson Frederick in SWITCH Issue 28",
-      width: 939,
-      height: 1024,
+      width: 1960,
+      height: 2188,
       caption:
         "“A Human's Job,” filed October 28, 2013 under Process: The Pixels of an Image.",
     },
     figures: [
       {
-        src: "/switch-issue-28-process.png",
+        src: "/switch-issue-28-process.jpg",
         afterPhaseId: "2",
         alt: "Process: The Pixels of an Image department index for SWITCH Issue 28",
-        width: 1024,
-        height: 755,
+        width: 1960,
+        height: 2124,
         caption:
           "Process: The Pixels of an Image, the department index for Issue 28.",
       },
