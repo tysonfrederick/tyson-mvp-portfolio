@@ -58,7 +58,7 @@ export const portfolioData: PortfolioData = {
       role: "Assistant Editor, Process Department Head, and Web Developer",
       description:
         "Academic publishing, editorial curation, and digital archiving for the CADRE Laboratory for New Media.",
-      imagePath: "/switch-issue-28-staff.png",
+      imagePath: "/switch-issue-28-masthead.jpg",
       tags: [
         "Academic Peer Review",
         "Archival Research",

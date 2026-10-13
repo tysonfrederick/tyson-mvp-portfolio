@@ -33,7 +33,7 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
     project.id === "ergoclick"
       ? "object-[85%_center]"
       : project.id === "switch-journal"
-        ? "object-top"
+        ? "object-left"
         : "object-center";
   const mediaClassName = `absolute inset-0 h-full w-full object-cover ${objectPosition} transition-transform duration-700 ease-out group-hover:scale-105${
     invertFallback ? " invert" : ""

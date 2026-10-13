@@ -241,13 +241,12 @@ const caseStudies: CaseStudy[] = [
     summary:
       "Academic publishing, editorial curation, and digital archiving for the CADRE Laboratory for New Media.",
     hero: {
-      src: "/switch-issue-28-staff.png",
-      alt: "SWITCH Issue 28 masthead and staff list, naming Tyson Frederick as Assistant Editor, head of Process, and Web Development",
-      width: 432,
-      height: 641,
-      contained: true,
+      src: "/switch-issue-28-hero.jpg",
+      alt: "SWITCH Issue 28 masthead and staff list, naming Tyson Frederick as Assistant Editor and head of Process",
+      width: 672,
+      height: 510,
       caption:
-        "Issue 28 masthead and staff. Assistant Editor, Process: The Pixels of an Image, and Web Development.",
+        "Issue 28 masthead and staff, through Process: The Pixels of an Image.",
     },
     interstitial: {
       src: "/switch-issue-28-article.jpg",
