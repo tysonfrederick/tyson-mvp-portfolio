@@ -4,6 +4,10 @@ export interface CaseStudyImage {
   alt: string;
   width: number;
   height: number;
+  /** Printed under the still. */
+  caption?: string;
+  /** Keep a narrow archival column near its native size. */
+  contained?: boolean;
 }
 
 export interface CaseStudyPhase {
@@ -35,8 +39,12 @@ export interface CaseStudy {
   /** Article heading for `challenge`. Defaults to "The Challenge". */
   challengeHeading?: string;
   challenge: string[];
+  /** Article heading for the phase section. Defaults to "The Architecture & Pipeline". */
+  architectureHeading?: string;
   architectureIntro: string;
   phases: CaseStudyPhase[];
+  /** Extra stills, each rendered after the phase whose `id` matches `afterPhaseId`. */
+  figures?: (CaseStudyImage & { afterPhaseId: string })[];
   outcome: string[];
 }
 
@@ -225,6 +233,88 @@ const caseStudies: CaseStudy[] = [
     ],
     outcome: [
       "This three-year project established my core framework for evaluating generative models. It proved that to ensure logical coherence and factual accuracy, systems must remain transparent Glass Boxes. They must reveal their structural rules and source data, rather than hiding behind confident hallucinations.",
+    ],
+  },
+  {
+    slug: "switch-journal",
+    title: "SWITCH: New Media Journal (Vol. 28)",
+    summary:
+      "Academic publishing, editorial curation, and digital archiving for the CADRE Laboratory for New Media.",
+    hero: {
+      src: "/switch-issue-28-staff.png",
+      alt: "SWITCH Issue 28 masthead and staff list, naming Tyson Frederick as Assistant Editor, head of Process, and Web Development",
+      width: 432,
+      height: 641,
+      contained: true,
+      caption:
+        "Issue 28 masthead and staff. Assistant Editor, Process: The Pixels of an Image, and Web Development.",
+    },
+    interstitial: {
+      src: "/switch-issue-28-article.jpg",
+      afterPhaseId: "3",
+      alt: "Published essay A Human's Job by Tyson Frederick in SWITCH Issue 28",
+      width: 939,
+      height: 1024,
+      caption:
+        "“A Human's Job,” filed October 28, 2013 under Process: The Pixels of an Image.",
+    },
+    figures: [
+      {
+        src: "/switch-issue-28-process.png",
+        afterPhaseId: "2",
+        alt: "Process: The Pixels of an Image department index for SWITCH Issue 28",
+        width: 1024,
+        height: 755,
+        caption:
+          "Process: The Pixels of an Image, the department index for Issue 28.",
+      },
+    ],
+    role: "Assistant Editor, Process Department Head, and Web Developer",
+    client: "San Jose State University, CADRE Laboratory for New Media",
+    clientLabel: "Institution",
+    timeline: "October 28, 2013",
+    effort: "Issue 28 publishing cycle",
+    effortLabel: "Scope",
+    stack: [
+      "Academic Peer Review",
+      "Archival Research",
+      "CMS Architecture",
+      "Editorial Curation",
+    ],
+    deliverable:
+      "Published Issue 28, including the Process department and the essay “A Human's Job”",
+    challengeHeading: "The Problem",
+    challenge: [
+      "The CADRE Laboratory required a modern, scalable digital architecture to publish Issue 28 of *SWITCH*, an academic journal dedicated to digital humanism, generative systems, and the intersection of art and technology. The challenge was twofold: engineering the web infrastructure while maintaining rigorous editorial standards across multiple contributing scholars.",
+    ],
+    architectureHeading: "The Execution",
+    architectureIntro:
+      "Operating in a dual capacity as Assistant Editor and Web Developer, I managed the end-to-end publishing pipeline.",
+    phases: [
+      {
+        id: "1",
+        title: "Systems Architecture",
+        paragraphs: [
+          "I spearheaded the platform migration and deployment using WordPress, establishing a structured CMS to handle complex academic formatting and rich media.",
+        ],
+      },
+      {
+        id: "2",
+        title: "Editorial Curation",
+        paragraphs: [
+          "I took on managerial editorial duties, specifically sourcing, interviewing, and curating authors for the \"Process: The Pixels of an Image\" department.",
+        ],
+      },
+      {
+        id: "3",
+        title: "Textual Analysis",
+        paragraphs: [
+          "I contributed original, published scholarship (\"A Human's Job\"), analyzing the epistemology of the artistic process and the systemic interaction between human intent and material application.",
+        ],
+      },
+    ],
+    outcome: [
+      "The successful launch of Issue 28 preserved the institution's digital archive and demonstrated a seamless integration of humanistic textual criticism with robust web development. It established a framework for evaluating, editing, and publishing complex arguments on digital culture.",
     ],
   },
 ];

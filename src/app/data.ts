@@ -9,7 +9,8 @@ export interface Project {
   title: string;
   role: string;
   description: string;
-  videoSrc: string;
+  /** Looping plate. Omitted when the project is stills only. */
+  videoSrc?: string;
   imagePath: string;
   tags: string[];
   /** Case-study slug. Present only when `/projects/[slug]` exists. */
@@ -50,6 +51,21 @@ export const portfolioData: PortfolioData = {
       imagePath: "/theta-2.jpg",
       tags: ["Processing", "ActionScript 3.0", "Kinect"],
       slug: "algorithmic-art-systems",
+    },
+    {
+      id: "switch-journal",
+      title: "SWITCH: New Media Journal (Vol. 28)",
+      role: "Assistant Editor, Process Department Head, and Web Developer",
+      description:
+        "Academic publishing, editorial curation, and digital archiving for the CADRE Laboratory for New Media.",
+      imagePath: "/switch-issue-28-staff.png",
+      tags: [
+        "Academic Peer Review",
+        "Archival Research",
+        "CMS Architecture",
+        "Editorial Curation",
+      ],
+      slug: "switch-journal",
     },
     {
       id: "foodshare-ecosystem",

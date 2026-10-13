@@ -6,6 +6,18 @@ type ProjectCaseStudyProps = {
   study: CaseStudy;
 };
 
+function EmphasisText({ text }: { text: string }) {
+  const parts = text.split(/(\*[^*]+\*)/g);
+
+  return parts.map((part, index) =>
+    part.startsWith("*") && part.endsWith("*") ? (
+      <em key={index}>{part.slice(1, -1)}</em>
+    ) : (
+      <span key={index}>{part}</span>
+    ),
+  );
+}
+
 function StudyImage({
   image,
   priority = false,
@@ -16,17 +28,26 @@ function StudyImage({
   sizes: string;
 }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50">
+    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50">
       <Image
         src={image.src}
         alt={image.alt}
         width={image.width}
         height={image.height}
         priority={priority}
-        sizes={sizes}
-        className="h-auto w-full object-cover"
+        sizes={image.contained ? "(min-width: 768px) 448px, 100vw" : sizes}
+        className={
+          image.contained
+            ? "mx-auto h-auto w-full max-w-md object-contain"
+            : "h-auto w-full object-cover"
+        }
       />
-    </div>
+      {image.caption ? (
+        <figcaption className="border-t border-white/10 px-6 py-4 text-sm leading-relaxed text-zinc-400">
+          {image.caption}
+        </figcaption>
+      ) : null}
+    </figure>
   );
 }
 
@@ -107,7 +128,7 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
                   key={paragraph}
                   className="text-base leading-relaxed text-zinc-300 md:text-lg"
                 >
-                  {paragraph}
+                  <EmphasisText text={paragraph} />
                 </p>
               ))}
             </div>
@@ -115,10 +136,10 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
 
           <section>
             <h2 className="text-2xl font-medium tracking-tight text-white md:text-3xl">
-              The Architecture & Pipeline
+              {study.architectureHeading ?? "The Architecture & Pipeline"}
             </h2>
             <p className="mt-6 text-base leading-relaxed text-zinc-300 md:text-lg">
-              {study.architectureIntro}
+              <EmphasisText text={study.architectureIntro} />
             </p>
 
             <div className="mt-8">
@@ -130,7 +151,7 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
                     </h3>
                     <div className="mt-4 flex flex-col gap-4">
                       <p className="text-base leading-relaxed text-zinc-300">
-                        {phase.paragraphs[0]}
+                        <EmphasisText text={phase.paragraphs[0]} />
                       </p>
                       {phase.points ? (
                         <ul className="flex flex-col gap-2">
@@ -139,7 +160,7 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
                               key={point}
                               className="border-l border-white/10 pl-4 text-base leading-relaxed text-zinc-300"
                             >
-                              {point}
+                              <EmphasisText text={point} />
                             </li>
                           ))}
                         </ul>
@@ -149,7 +170,7 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
                           key={paragraph}
                           className="text-base leading-relaxed text-zinc-300"
                         >
-                          {paragraph}
+                          <EmphasisText text={paragraph} />
                         </p>
                       ))}
                     </div>
@@ -169,14 +190,16 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
                     ) : null}
                   </section>
 
-                  {phase.id === study.interstitial.afterPhaseId ? (
-                    <div className="mt-8">
-                      <StudyImage
-                        image={study.interstitial}
-                        sizes="(min-width: 1024px) 66vw, 100vw"
-                      />
-                    </div>
-                  ) : null}
+                  {[study.interstitial, ...(study.figures ?? [])]
+                    .filter((image) => image.afterPhaseId === phase.id)
+                    .map((image) => (
+                      <div key={image.src} className="mt-8">
+                        <StudyImage
+                          image={image}
+                          sizes="(min-width: 1024px) 66vw, 100vw"
+                        />
+                      </div>
+                    ))}
                 </div>
               ))}
             </div>
@@ -192,7 +215,7 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
                   key={paragraph}
                   className="text-base leading-relaxed text-zinc-300 md:text-lg"
                 >
-                  {paragraph}
+                  <EmphasisText text={paragraph} />
                 </p>
               ))}
             </div>

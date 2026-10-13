@@ -16,7 +16,7 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !project.videoSrc) return;
 
     const markReady = () => {
       if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
@@ -30,7 +30,11 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
   }, [project.videoSrc]);
   const invertFallback = project.imagePath.includes("foodshare") && !videoReady;
   const objectPosition =
-    project.id === "ergoclick" ? "object-[85%_center]" : "object-center";
+    project.id === "ergoclick"
+      ? "object-[85%_center]"
+      : project.id === "switch-journal"
+        ? "object-top"
+        : "object-center";
   const mediaClassName = `absolute inset-0 h-full w-full object-cover ${objectPosition} transition-transform duration-700 ease-out group-hover:scale-105${
     invertFallback ? " invert" : ""
   }`;
@@ -51,23 +55,25 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
           className={mediaClassName}
           sizes="(min-width: 768px) 50vw, 100vw"
         />
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={project.imagePath}
-          src={project.videoSrc}
-          onCanPlay={() => setVideoReady(true)}
-          onError={() => setVideoReady(false)}
-          aria-hidden
-          className={
-            videoReady
-              ? mediaClassName
-              : "pointer-events-none absolute h-px w-px opacity-0"
-          }
-        />
+        {project.videoSrc ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={project.imagePath}
+            src={project.videoSrc}
+            onCanPlay={() => setVideoReady(true)}
+            onError={() => setVideoReady(false)}
+            aria-hidden
+            className={
+              videoReady
+                ? mediaClassName
+                : "pointer-events-none absolute h-px w-px opacity-0"
+            }
+          />
+        ) : null}
       </div>
 
       <div className="z-10 flex flex-col gap-3 p-4 md:p-6">
