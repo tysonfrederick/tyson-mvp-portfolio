@@ -190,7 +190,7 @@ const caseStudies: CaseStudy[] = [
       "Modern algorithmic systems are often treated as objective black boxes. My MFA research challenged this premise. Before the current era of LLMs, I wanted to understand how computational systems process, generate, and sometimes corrupt human meaning. To do this, I didn't just write a theoretical critique—I built the deterministic systems from scratch to observe the logic in real-time.",
     ],
     architectureIntro:
-      "Five phases of distinction. Each phase closes on an insight about the acceptance of algorithmic systems.",
+      "Four phases of distinction. Each phase brings an insight about the acceptance or understanding of algorithmic systems.",
     phases: [
       {
         id: "1",
