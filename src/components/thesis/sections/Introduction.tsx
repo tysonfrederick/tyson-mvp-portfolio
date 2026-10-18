@@ -12,7 +12,7 @@ export default function Introduction() {
   return (
     <ThesisSection
       id="introduction"
-      title="Introduction"
+      title="Artist Introduction"
       paragraphs={paragraphs}
     />
   );
