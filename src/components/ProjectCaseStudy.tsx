@@ -1,5 +1,11 @@
 import Image from "next/image";
-import type { CaseStudy, CaseStudyImage } from "@/app/projects/studies";
+import type {
+  CaseStudy,
+  CaseStudyBlock,
+  CaseStudyCode,
+  CaseStudyImage,
+  CaseStudyTable,
+} from "@/app/projects/studies";
 import ProjectStudyFrame from "@/components/ProjectStudyFrame";
 
 type ProjectCaseStudyProps = {
@@ -7,14 +13,159 @@ type ProjectCaseStudyProps = {
 };
 
 function EmphasisText({ text }: { text: string }) {
-  const parts = text.split(/(\*[^*]+\*)/g);
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
 
-  return parts.map((part, index) =>
-    part.startsWith("*") && part.endsWith("*") ? (
-      <em key={index}>{part.slice(1, -1)}</em>
-    ) : (
-      <span key={index}>{part}</span>
-    ),
+  return parts.map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={index} className="font-medium text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+
+    if (part.startsWith("*") && part.endsWith("*")) {
+      return <em key={index}>{part.slice(1, -1)}</em>;
+    }
+
+    return <span key={index}>{part}</span>;
+  });
+}
+
+function StudyPoints({
+  points,
+  ordered = false,
+}: {
+  points: string[];
+  ordered?: boolean;
+}) {
+  const Tag = ordered ? "ol" : "ul";
+
+  return (
+    <Tag
+      className={
+        ordered
+          ? "flex list-decimal flex-col gap-4 pl-6 marker:text-zinc-400"
+          : "flex flex-col gap-4"
+      }
+    >
+      {points.map((point) => (
+        <li
+          key={point}
+          className={
+            ordered
+              ? "pl-2 text-base leading-relaxed text-zinc-300"
+              : "border-l border-white/10 pl-4 text-base leading-relaxed text-zinc-300"
+          }
+        >
+          <EmphasisText text={point} />
+        </li>
+      ))}
+    </Tag>
+  );
+}
+
+function StudyCode({ code }: { code: CaseStudyCode }) {
+  return (
+    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50">
+      {code.caption ? (
+        <figcaption className="border-b border-white/10 px-6 py-4 text-sm leading-relaxed text-zinc-400">
+          {code.caption}
+        </figcaption>
+      ) : null}
+      <pre className="overflow-x-auto p-6 text-sm leading-relaxed text-zinc-300">
+        <code className="font-mono">{code.source}</code>
+      </pre>
+    </figure>
+  );
+}
+
+function StudyBlock({ block }: { block: CaseStudyBlock }) {
+  return (
+    <div className="flex flex-col gap-4">
+      {block.title ? (
+        <h4 className="text-lg font-medium tracking-tight text-white">
+          <EmphasisText text={block.title} />
+        </h4>
+      ) : null}
+      {block.paragraphs?.map((paragraph) => (
+        <p key={paragraph} className="text-base leading-relaxed text-zinc-300">
+          <EmphasisText text={paragraph} />
+        </p>
+      ))}
+      {block.points ? (
+        <StudyPoints points={block.points} ordered={block.ordered} />
+      ) : null}
+      {block.code ? <StudyCode code={block.code} /> : null}
+    </div>
+  );
+}
+
+function StudyTable({ table }: { table: CaseStudyTable }) {
+  return (
+    <>
+      <div className="flex flex-col gap-4 md:hidden">
+        {table.rows.map((row) => (
+          <div
+            key={row[0]}
+            className="rounded-2xl border border-white/10 bg-zinc-900/50 p-6"
+          >
+            <p className="text-base font-medium tracking-tight text-white">
+              <EmphasisText text={row[0]} />
+            </p>
+            <dl className="mt-6 flex flex-col gap-6">
+              {row.slice(1).map((cell, index) => (
+                <div key={table.headers[index + 1]}>
+                  <dt className="text-xs font-medium tracking-tight text-zinc-400">
+                    {table.headers[index + 1]}
+                  </dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-zinc-300">
+                    <EmphasisText text={cell} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+      <div className="hidden overflow-x-auto rounded-2xl border border-white/10 md:block">
+        <table className="w-full border-collapse text-left">
+          <thead>
+            <tr className="border-b border-white/10 bg-zinc-900/50">
+              {table.headers.map((header) => (
+                <th
+                  key={header}
+                  className="w-1/4 px-4 py-4 text-xs font-medium tracking-tight text-zinc-400"
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row) => (
+              <tr
+                key={row[0]}
+                className="border-b border-white/10 align-top last:border-b-0"
+              >
+                {row.map((cell, index) => (
+                  <td
+                    key={`${row[0]}-${table.headers[index]}`}
+                    className={`px-4 py-6 text-sm leading-relaxed ${
+                      index === 0
+                        ? "font-medium text-white"
+                        : "text-zinc-300"
+                    }`}
+                  >
+                    <EmphasisText text={cell} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 
@@ -69,6 +220,10 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
     { label: "Timeline", value: study.timeline },
     { label: study.effortLabel ?? "Effort", value: study.effort },
   ];
+  const architectureHeading =
+    study.architectureHeading === undefined
+      ? "The Architecture & Pipeline"
+      : study.architectureHeading;
 
   return (
     <>
@@ -135,43 +290,51 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
           </section>
 
           <section>
-            <h2 className="text-2xl font-medium tracking-tight text-white md:text-3xl">
-              {study.architectureHeading ?? "The Architecture & Pipeline"}
-            </h2>
-            <p className="mt-6 text-base leading-relaxed text-zinc-300 md:text-lg">
-              <EmphasisText text={study.architectureIntro} />
-            </p>
+            {architectureHeading ? (
+              <h2 className="text-2xl font-medium tracking-tight text-white md:text-3xl">
+                {architectureHeading}
+              </h2>
+            ) : null}
+            {study.architectureIntro ? (
+              <p
+                className={`text-base leading-relaxed text-zinc-300 md:text-lg ${
+                  architectureHeading ? "mt-6" : ""
+                }`}
+              >
+                <EmphasisText text={study.architectureIntro} />
+              </p>
+            ) : null}
 
-            <div className="mt-8">
+            <div>
               {study.phases.map((phase) => (
                 <div key={phase.id}>
                   <section className="mt-8 border-t border-zinc-800 pt-8">
                     <h3 className="text-xl font-medium tracking-tight text-white">
                       {phase.title}
                     </h3>
-                    <div className="mt-4 flex flex-col gap-4">
-                      <p className="text-base leading-relaxed text-zinc-300">
-                        <EmphasisText text={phase.paragraphs[0]} />
-                      </p>
-                      {phase.points ? (
-                        <ul className="flex flex-col gap-2">
-                          {phase.points.map((point) => (
-                            <li
-                              key={point}
-                              className="border-l border-white/10 pl-4 text-base leading-relaxed text-zinc-300"
-                            >
-                              <EmphasisText text={point} />
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                      {phase.paragraphs.slice(1).map((paragraph) => (
-                        <p
-                          key={paragraph}
-                          className="text-base leading-relaxed text-zinc-300"
-                        >
-                          <EmphasisText text={paragraph} />
+                    <div className="mt-4 flex flex-col gap-8">
+                      <div className="flex flex-col gap-4">
+                        <p className="text-base leading-relaxed text-zinc-300">
+                          <EmphasisText text={phase.paragraphs[0]} />
                         </p>
+                        {phase.points ? (
+                          <StudyPoints points={phase.points} />
+                        ) : null}
+                        {phase.paragraphs.slice(1).map((paragraph) => (
+                          <p
+                            key={paragraph}
+                            className="text-base leading-relaxed text-zinc-300"
+                          >
+                            <EmphasisText text={paragraph} />
+                          </p>
+                        ))}
+                      </div>
+                      {phase.table ? <StudyTable table={phase.table} /> : null}
+                      {phase.blocks?.map((block) => (
+                        <StudyBlock
+                          key={block.title ?? block.paragraphs?.[0]}
+                          block={block}
+                        />
                       ))}
                     </div>
                     {phase.gate ? (
@@ -207,7 +370,7 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
 
           <section className="border-t border-zinc-800 pt-16">
             <h2 className="text-2xl font-medium tracking-tight text-white md:text-3xl">
-              The Outcome
+              {study.outcomeHeading ?? "The Outcome"}
             </h2>
             <div className="mt-6 flex flex-col gap-6">
               {study.outcome.map((paragraph) => (
@@ -218,6 +381,9 @@ export function CaseStudyBody({ study }: { study: CaseStudy }) {
                   <EmphasisText text={paragraph} />
                 </p>
               ))}
+              {study.outcomePoints ? (
+                <StudyPoints points={study.outcomePoints} />
+              ) : null}
             </div>
           </section>
         </article>

@@ -10,11 +10,32 @@ export interface CaseStudyImage {
   contained?: boolean;
 }
 
+export interface CaseStudyCode {
+  caption?: string;
+  source: string;
+}
+
+export interface CaseStudyTable {
+  headers: string[];
+  rows: string[][];
+}
+
+export interface CaseStudyBlock {
+  title?: string;
+  paragraphs?: string[];
+  points?: string[];
+  /** Render `points` as a numbered list. */
+  ordered?: boolean;
+  code?: CaseStudyCode;
+}
+
 export interface CaseStudyPhase {
   id: string;
   title: string;
   paragraphs: string[];
   points?: string[];
+  blocks?: CaseStudyBlock[];
+  table?: CaseStudyTable;
   gate?: string;
   artifact?: string;
 }
@@ -45,7 +66,10 @@ export interface CaseStudy {
   phases: CaseStudyPhase[];
   /** Extra stills, each rendered after the phase whose `id` matches `afterPhaseId`. */
   figures?: (CaseStudyImage & { afterPhaseId: string })[];
+  /** Article heading for `outcome`. Defaults to "The Outcome". */
+  outcomeHeading?: string;
   outcome: string[];
+  outcomePoints?: string[];
 }
 
 export const mfaThesisSlug = "algorithmic-art-systems";
@@ -162,9 +186,9 @@ const caseStudies: CaseStudy[] = [
   {
     slug: mfaThesisSlug,
     title:
-      "Algorithmic Art Systems: Early Research in Creative AI Interaction",
+      "A Creative Process: Glass-Box Generative Systems, Epistemic Deconstruction & Cyber-Physical Interaction",
     summary:
-      "Engineered, peer-reviewed, and publicly exhibited algorithmic systems evaluating human-computer interaction.",
+      "Engineering deterministic and stochastic algorithms, procedural video pipelines, and computer-vision installations to interrogate how computational systems construct, flatten, and transform human meaning.",
     hero: {
       src: "/theta-2.jpg",
       alt: "Generative coordinate field from theta2, a Processing sketch, 2012",
@@ -178,61 +202,238 @@ const caseStudies: CaseStudy[] = [
       width: 1024,
       height: 731,
     },
-    role: "MFA Researcher, Lead Interactive Systems Designer",
-    client: "San Jose State University, CADRE Laboratory for New Media",
+    role: "Principal Creative Technologist, Systems Researcher & Solo Author (First & Sole Graduate of SJSU's MFA in Digital Media: Art & Technology)",
+    client:
+      "San Jose State University — School of Art & Design / CADRE Laboratory for New Media",
     clientLabel: "Institution",
-    timeline: "Three years, 2011–2014",
-    effort: "Advancement to Candidacy, April 2013. MFA catalog, May 2014.",
-    effortLabel: "Record",
+    timeline: "2011–2014",
+    effort:
+      "Editor's Choice Award — 2014 Bay Area Maker Faire; Phi Kappa Phi Academic Honor Society Inductee (3.88 GPA)",
+    effortLabel: "Recognition",
     stack: [
-      "Processing 2.0",
-      "Java",
+      "Processing 2.0 (Java)",
       "ActionScript 3.0",
-      "Algorithmic Prototyping",
-      "Historiography",
-      "Kinect / OpenNI",
-      "Public Exhibition",
+      "OpenNI / Kinect",
+      "Unity3D",
+      "MAX/MSP",
+      "Ableton Live 9",
+      "After Effects",
+      "Premiere Pro",
+      "Illustrator",
+      "Photoshop",
     ],
     deliverable:
-      "MFA catalog, A Creative Process, and a public Kinect installation",
-    challengeHeading: "The Scholarly Problem",
+      "48-page peer-reviewed thesis and catalog, 50+ generative code sketches, 28 cataloged plates, 20 procedural HD videos, 150 high-resolution digital prints (up to 12,000 × 9,000 px), and 8+ public exhibitions",
+    challengeHeading: "Executive Summary",
     challenge: [
-      "Modern algorithmic systems are often treated as objective black boxes. My MFA research challenged this premise. Before the current era of LLMs, I wanted to understand how computational systems process, generate, and sometimes corrupt human meaning. To do this, I didn't just write a theoretical critique—I built the deterministic systems from scratch to observe the logic in real-time.",
+      "Long before the current wave of Large Language Models and diffusion-based video generators, computational systems faced a foundational epistemic and design problem: when algorithms optimize for mass consensus, they flatten complex human edge cases into generic, predictable outputs.",
+      "Conducted over three years at San Jose State University's CADRE Laboratory for New Media, A Creative Process was a first-principles R&D investigation into the ontology of software, generative aesthetics, and human-computer interaction. Rather than treating algorithmic media as an inscrutable black box, or evaluating it solely through abstract critical theory, I built the generative engines from scratch. Writing raw Java (Processing 2.0) and ActionScript 3.0 alongside OpenNI/Kinect computer-vision pipelines, I engineered over 50 executable sketches, 20 procedural HD videos, and interactive spatial installations to observe how deterministic rules and stochastic variables behave across thousands of iterations in real time.",
+      "This research established the foundational principles that govern my work today as a Creative Technologist and Systems Architect: non-destructive state simulation (undo/redo as the essence of software), human-in-the-loop epistemic curation, and transparent Glass-Box system design.",
     ],
-    architectureIntro:
-      "Four phases of distinction. Each phase brings an insight about the acceptance or understanding of algorithmic systems.",
+    architectureHeading: "",
+    architectureIntro: "",
     phases: [
       {
         id: "1",
-        title: "Phase 1: Epistemic Deconstruction",
+        title:
+          "1. The Epistemic & Design Problem: Hypermediacy, Flattening & The Black Box",
         paragraphs: [
-          "I began by analyzing the hidden premises in modern media and historical art movements. I looked for category errors in how systems present information—specifically, how algorithms often flatten complex human experiences into generic, manufactured outputs.",
-        ], 
+          "Modern digital interfaces and generative pipelines often suffer from two compounding failures: epistemic opacity (hiding structural rules and source biases behind a confident surface) and aesthetic deadening (remediating the same commercial tropes until human perception becomes numb).",
+          "In analyzing why mainstream digital media and automated outputs so frequently feel sterile or coercive, my thesis identified three structural root causes.",
+        ],
+        blocks: [
+          {
+            title: 'The Illusion of the "Universal Ideal" (Category Error)',
+            paragraphs: [
+              'Algorithmic and commercial systems frequently operate on the hidden premise that a single, unified model of "normalcy" can represent all human experience. When a system optimizes exclusively for the statistical center, it commits a category error — erasing outlier perspectives, cultural nuances, and edge-case human realities.',
+            ],
+          },
+          {
+            title: "Hypermediated Sensory Deadening",
+            paragraphs: [
+              "Drawing on Jay David Bolter and Richard Grusin's *Immediacy, Hypermediacy, and Remediation*, I examined how continuous bombardment by extreme, repetitive commercial imagery deadens human cognitive response. Interfaces that shout for attention with high-saturation templates look attractive on the surface but fail to provoke genuine cognitive engagement.",
+            ],
+          },
+          {
+            title: "Result-Obsession Over Process Transparency",
+            paragraphs: [
+              'Traditional evaluation judges an artifact solely by its static final frame while ignoring the underlying algorithmic process that generated it. When users and operators cannot inspect the procedural logic — the "why" behind the output — trust and agency collapse.',
+            ],
+          },
+          {
+            title: "Core Research Thesis",
+            paragraphs: [
+              "Computing's unique contribution to human thought is not its ability to mimic static traditional media. It is the capacity to execute a single structural variation across thousands or millions of iterations while preserving non-destructive state traversal (undo/redo). To prevent algorithmic flattening, generative systems must be architected as transparent Glass Boxes that expose their underlying code, embrace controlled stochastic variance, and require mindful human-in-the-loop curation.",
+            ],
+          },
+        ],
       },
       {
         id: "2",
-        title: "Phase 2: Computational Prototyping",
+        title:
+          "2. Theoretical & Humanities Framework: Steel-Manning the Canon",
         paragraphs: [
-          "To test these theories, I moved from textual analysis to applied software engineering. I wrote raw Processing (Java) and ActionScript 3.0 scripts to build dynamic, real-time algorithms. Projects like Bull vs. Bear utilized stochastic variables and data arrays to simulate market volatility, while What's Important to You utilized path-finding node graphs to test associative logic.",
+          "To ground my computational prototypes in rigorous humanistic scholarship, I evaluated my generative outputs against three intersecting canons: 20th-century art history (Modernism vs. Postmodernism), political economy of information, and Eastern epistemology.",
+          "Rather than dismissing historical paradigms, I analyzed what each movement got right before diagnosing where its logic failed.",
+        ],
+        table: {
+          headers: [
+            "Paradigm",
+            "Steel-Man Case",
+            "Failure Mode",
+            "Resolution",
+          ],
+          rows: [
+            [
+              "Contemporary Modernism (Picasso, Matisse, Pollock, Kandinsky)",
+              "Disrupted rigid realist representation. Introduced process, abstraction, and formal geometric primitives (lines, circles, polygons) as universal visual languages.",
+              '**The Fallacy of the Unified Theory:** Modernism claimed a front-facing, singular "ultimate truth" that supposedly fit everyone.',
+              'Retains Modernism\'s high-contrast geometric clarity and process-driven emergence while rejecting the idea that there is only one "correct" final output.',
+            ],
+            [
+              "Postmodernism (70s–90s anti-establishment and feminist critique)",
+              'Justifiably dismantled Modernism\'s elitist monopoly on "right vs. wrong," proving that institutional narratives excluded marginalized voices.',
+              '**Reactive Binary Inversion:** By fighting fire with fire, Postmodernism often replaced one rigid orthodoxy with a single opposing viewpoint, getting stuck in "right vs. wrong" arguments.',
+              "Moves beyond binary opposition into probabilistic pluralism — building generative systems where a single codebase generates thousands of unique, valid outcomes depending on context.",
+            ],
+          ],
+        },
+        blocks: [
+          {
+            title:
+              "Primary & Secondary Lineage: Cybernetics, Intervention & Epistemology",
+            points: [
+              "*Subversive systems intervention (Joseph DeLappe).* Studying under Professor Joseph DeLappe at the University of Nevada, Reno, shaped my understanding of process as the primary artifact. Analyzing DeLappe's *dead-in-iraq* (2006–2011) — where he logged into the US Army's official recruiting game *America's Army* to manually type the names, ages, and dates of service members killed in Iraq — and *The Salt Satyagraha Online* (2008) — walking 240 miles on a customized physical treadmill mapped into Second Life — demonstrated how entering and perturbing an existing digital system exposes its hidden institutional mechanics.",
+              "*Closed-loop cybernetics and real-time participation (Nam June Paik & G. Craig Hobbs).* I contrasted Nam June Paik's *TV Buddha* (1974) — a closed cybernetic loop where the observer contemplates their own real-time mediated reflection — with SJSU Professor G. Craig Hobbs's *The Hoop Mandala* (2011/2014), where real-time projection transforms the viewer from a passive consumer into an active generative participant anchored entirely in the present moment.",
+              "*Information consolidation vs. distributed awakening (Marx & Engels applied to network theory).* Evaluating *The Communist Manifesto* through the lens of 21st-century information theory highlighted a central paradox: capital accumulation drives tech monopolies to acquire breakthrough technologies and narrow them into a finite set of standardized consumer products. The same globalized communication networks — the internet, social video, distributed databases — hand everyday users the tools to compare notes at scale and expose systemic blind spots.",
+              '*Eastern epistemology and śūnyatā (emptiness as variable state).* Mentored in Eastern studies by Scott Nanamura ("Buddhism as a radical change of perspective"), I mapped the Buddhist concept of emptiness directly to object-oriented programming. External objects and data structures are like empty vessels — variables whose semantic meaning is not fixed in stone, but dynamically instantiated by the observer\'s context, actions, and cognitive state.',
+            ],
+          },
         ],
       },
       {
         id: "3",
-        title: "Phase 3: Academic Peer Review & Defense",
+        title: "3. Computational Architecture & Procedural Video Pipeline",
         paragraphs: [
-          "The research was subjected to rigorous academic peer review. I successfully defended the underlying computational architecture and humanistic thesis before a formal faculty committee at the San Jose State University CADRE Laboratory for New Media.",
+          "To test these philosophical propositions empirically, I engineered custom generative applications across Processing 2.0 (Java) and Adobe Flash CS6 / ActionScript 3.0, alongside interactive node graphs and computer-vision pipelines.",
+        ],
+        blocks: [
+          {
+            title:
+              "theta2 — Deterministic Trigonometry & Emergent Moiré Architecture",
+            paragraphs: [
+              "In works such as *theta2* (Plates 23 & 24, 2012–2013) and *16x16_2pi* (Plate 17, 2011), I investigated how minimal mathematical rules generate complex spatial depth and organic curvature without manual illustration.",
+            ],
+            points: [
+              "**Algorithmic mechanics.** Rather than drawing curves with Bézier handles, theta2 initializes a 1920 × 1080 black canvas (background(0.0)) and executes a for loop across 2,600 discrete iterations (i < 2600), incrementing angle a by 2π/13 (TWO_PI/13) on every pass.",
+              "**Non-linear spatial scaling.** By pairing linear index progression (i, i × 6, i × 10) against quadratic growth (i × i and i × (3 × 3)) and modulating endpoints with cos(a) and sin(a), straight 2D vector lines self-organize into a translucent, three-dimensional parabolic veil with semi-transparent alpha layering (stroke(80, 50) and stroke(70, 100, 100, 90)).",
+              '**Commented state traceability.** As preserved in the primary codebase snapshot (Fig. 24), commented-out experimental branches (// stroke(255, 0, 0, 180); and // println("The angle = " + a)) served as live telemetry logs and non-destructive state checkpoints before invoking saveFrame() for high-resolution output.',
+            ],
+            code: {
+              caption:
+                "Primary source excerpt: theta2 (Processing 2.0b5 / Java, 2013)",
+              source: `size(1920, 1080);
+background(0.0);
+float a = 0.0;
+float inc = TWO_PI / 13;
+
+println(" The inc = " + inc);
+for (int i = 0; i < 2600; i += 1) {
+  stroke(80, 50);
+  line(350, i, i * 6, 1050 + cos(a) * .3);
+  line(850, 520 + (i * 10), (i * (3 * 3)), cos(a) * 25);
+  stroke(70, 100, 100, 90);
+  line(800, i + 350, i * i, 50 + sin(a) * -10);
+  line(1600, i + 1400, i * i, 50 + sin(a) * -10);
+  a = a + inc;
+}
+saveFrame();`,
+            },
+          },
+          {
+            title: "Stochastic Simulation & Associative Node Graphs",
+            paragraphs: [
+              "Beyond pure trigonometric geometry, I wrote applied algorithmic studies to test how code models human systems.",
+            ],
+            points: [
+              "**Bull vs. Bear (stochastic market volatility).** Engineered dynamic data arrays driven by stochastic variables to simulate the emotional and structural volatility of financial markets in real time.",
+              "**What's Important to You (associative path-finding node graphs).** Built interactive path-finding node graphs to test associative logic and visualize how individual human priorities diverge from standardized societal templates.",
+            ],
+          },
+          {
+            title:
+              "Search-Engine Dataset Remediation & Destructive / Non-Destructive Pruning",
+            paragraphs: [
+              "A recurring failure in modern AI training is uncritically ingesting biased web-scraped datasets. In 2007–2012, I ran a series of experiments interrogating how search engines categorize reality.",
+            ],
+            points: [
+              '**Querying semantic labels ("lawrence" and "random").** I queried Google Images for the token "lawrence" (yielding lawrence_of_arabia_3.jpeg, Fig. 15) and the token "random" (yielding grapes.jpg, Fig. 19).',
+              "**Algorithmic deconstruction pipeline.** Rather than accepting the search engine's taxonomic label, I passed these raw dataset images through multi-stage vector and raster transformations (*Lawrence of Arabia*, Fig. 14; *landscape-grape*, Fig. 20; *Landscapes of Grapes*, Fig. 21 at 12,000 × 9,000 px; and *abstract landscape 4*, Fig. 27). By systematically deleting 50% of the data array, rotating spatial coordinates, stripping semantic contours, and imposing new rule sets mid-process, I tested how far source data can be compressed or mutated before human pattern-recognition breaks down.",
+            ],
+          },
         ],
       },
       {
         id: "4",
-        title: "Phase 4: Public Execution & Transparency",
+        title: "4. Design Critique & Audio-Visual Systems Taxonomy",
         paragraphs: [
-          "The research culminated in a cyber-physical gallery exhibition and an interactive Kinect installation that won an Editor's Choice award at the Bay Area Maker Faire. Rather than hiding the mechanics, I displayed the raw, printed codebase directly alongside the digital projections.",
+          "Evaluating generative output requires distinguishing between mere visual noise and resolved compositional tension. Across the 28 cataloged works, I established strict evaluative criteria across procedural video and motion, ultra-high-resolution print, and somatic spatial installation.",
+        ],
+        blocks: [
+          {
+            title:
+              "Procedural Video & Audio-Visual Counterpoint (20 HD Video Works)",
+            points: [
+              '**Our voices can\'t be heard. (Plates 7 & 12, Processing 2.0 HD video, 1920 × 1080 px, 2014).** The application renders a dense vertical cadence of dark structural bars on the left anchor against high-velocity diagonal vector trajectories sweeping across a muted pastel field (Figs. 7 & 12). Visually, the kinetic rhythm and ecstatic velocity of the strokes demand an aggressive audio track — yet the video is engineered to run in complete silence. This audio-visual dissonance was a deliberate structural critique of modern institutional censorship: in contemporary media, the obscene is amplified while genuinely outlier or non-conformist perspectives are muted.',
+              "**Blue Rain (Plate 1, ActionScript 3.0 HD video, 1920 × 1080 px, 2014) and untitled (inspired by skrillex) (Plate 18, ActionScript 3.0 video and 12,000 × 9,000 px print, 2013).** Both systems pit rigid vertical architectural columns against fractured, high-chroma diagonal planes (cobalt blue and neon mint in *Blue Rain*; electric lime and cyan against charcoal in *untitled (inspired by skrillex)*). Translating audio frequency and tempo dynamics into procedural ActionScript 3.0 particle physics created a sense of controlled structural fragmentation.",
+            ],
+          },
+          {
+            title: "Vector Density, Topology & Scale Modulations",
+            points: [
+              "**Ladders and Chutes (Plate 9, 2013) vs. Untitled Flash Project (Plate 10, 2013).** A comparative study in visual weight and negative space. *Ladders and Chutes* balances heavy, varied stroke weights across triangular and ladder-like structural trusses against open white space, preserving clear figure-ground hierarchy. By contrast, *Untitled Flash Project* pushes line-iteration density to the threshold of chaotic entanglement — demonstrating how unconstrained loop counts rapidly degrade visual legibility into uniform gray noise if not governed by halting constraints.",
+              "**How we move together so well. (Plate 16, Processing 2.0, 2011) and The Transformative Pond (Plate 22, 3,600 × 3,600 px, 2014).** Explored cellular, ribbed path-weaving (crimson and cobalt striated vectors interlocking across a neutral plane in Fig. 16) versus organic topological contour mapping (*The Transformative Pond*, Fig. 22), demonstrating mastery across both hard-edge algorithmic cellular automata and fluid topographical gradients.",
+              "**The Steps to Freedom (Plate 28, Processing 2.0, 1,200 × 800 px, 2012).** Uses a single diagonal vector trajectory radiating stepped golden-amber rectangular bounding boxes from the top-left origin toward the bottom-right frame — a minimalist study in progressive spatial expansion and directional momentum.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "5",
+        title: '5. Academic Defense & "Glass-Box" Public Exhibition',
+        paragraphs: [
+          "A central tension discovered during my research was the Reception Gap between traditional gallery viewers and new-media technologists.",
+        ],
+        points: [
+          "When I exhibited algorithmic outputs strictly as traditionally framed, flat 2D archival prints (Fig. 25), general audiences praised their bold Modernist aesthetics — while digital media peers critiqued static prints as stripping away the interactive, temporal soul of the software.",
+          "Conversely, presenting raw unframed screens alienated traditional viewers who looked only for a finished object rather than an ongoing computational process.",
+        ],
+        blocks: [
+          {
+            title:
+              'The "Glass-Box" Resolution (SJSU CADRE Defense & 2014 Bay Area Maker Faire)',
+            paragraphs: [
+              "To resolve this dichotomy for my formal thesis defense before the SJSU CADRE faculty committee and subsequent public exhibitions (over 8 gallery shows culminating at the 2014 Bay Area Maker Faire), I designed a hybrid cyber-physical installation architecture.",
+            ],
+            ordered: true,
+            points: [
+              "**Embodied computer vision (OpenNI / Microsoft Kinect).** Rather than confining the algorithms to pre-rendered loops, I integrated real-time depth-sensor skeletal tracking via OpenNI and Microsoft Kinect. As attendees stepped into the physical space, their somatic movement directly modulated the generative parameters on screen — turning the viewer into a live co-creator in the present moment.",
+              '**Radical code transparency.** Refusing to hide the generative logic behind a black box, I printed and displayed the raw Processing (Java) and ActionScript 3.0 source code directly alongside the live digital projections and framed artifacts. Viewers could trace the exact for loops, trigonometric functions (cos(a), sin(a)), and stochastic variables driving the visual transformations in real time.',
+              "**Validation.** This transparent, human-in-the-loop installation won an Editor's Choice Award at the 2014 Bay Area Maker Faire, validating that demystifying complex algorithmic processes increases both public engagement and epistemic trust.",
+            ],
+          },
         ],
       },
     ],
+    outcomeHeading:
+      "6. The 12-Year Architectural Lineage: From 2014 MFA R&D to 2026 Enterprise AI Systems",
     outcome: [
-      "This three-year project established my core framework for evaluating generative models. It proved that to ensure logical coherence and factual accuracy, systems must remain transparent Glass Boxes. They must reveal their structural rules and source data, rather than hiding behind confident hallucinations.",
+      "A Creative Process was not an isolated academic exercise. It was the three-year R&D crucible that established the core architectural principles I deploy today across enterprise AI, spatial computing, and cyber-physical hardware.",
+    ],
+    outcomePoints: [
+      '**From undo/redo theory (2014) to air-gapped digital twins ("The Shadow Map," 2026).** My 2014 thesis identified non-destructive state traversal — stepping backward and forward to undo and redo across thousands of iterations — as the defining superpower of software. Today, that principle powers my Shadow Map Digital Twin architecture for high-hazard environments (such as Lawrence Livermore National Laboratory) — streaming one-way telemetry into an air-gapped virtual sandbox to run Monte Carlo simulations before any physical action is authorized on the floor.',
+      "**From printed source code (2014) to Glass-Box compound agentic systems (2026).** Exhibiting printed Java/Processing code beside live projections to combat black-box opacity evolved directly into my current work building deterministic RAG pipelines (pgvector), layout-aware document parsing, Model Context Protocol (MCP) throttling, and chain-of-thought reasoning traces that force LLMs to show their primary sources rather than hallucinating.",
+      '**From Kinect embodied presence (2014) to Flow Experience Design (FXD) and the Somatic UI Spectrum (2026).** Observing how real-time computer vision anchored gallery participants in a meditative flow state (eliminating past regret and future anxiety) laid the groundwork for Flow Experience Design (FXD) and "The Breathing UI" — interfaces that rest at a quiet Somatic Minimum and expand only when live telemetry demands human intervention — as well as my hardware R&D (GameTrigger/ErgoClick) and Parkinson\'s Zero-UI voice accessibility research.',
     ],
   },
   {
