@@ -170,10 +170,11 @@ function LayerLabel({ index, children }: { index: string; children: string }) {
 
 export default function FoodShareOrchestrationDiagram() {
   const rootRef = useRef<HTMLElement>(null);
-  const [stage, setStage] = useState(0);
+  const [tick, setTick] = useState(0);
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(false);
-  const [dispatchBeat, setDispatchBeat] = useState(0);
+  const stage = Math.floor(tick / 2) % STAGES.length;
+  const dispatchBeat = tick % 2;
 
   useEffect(() => {
     const node = rootRef.current;
@@ -188,18 +189,12 @@ export default function FoodShareOrchestrationDiagram() {
 
   useEffect(() => {
     if (!inView || paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setInterval(() => {
-      setStage((current) => (current + 1) % STAGES.length);
-    }, 3200);
+      setTick((current) => current + 1);
+    }, 1600);
     return () => window.clearInterval(id);
   }, [inView, paused]);
-
-  useEffect(() => {
-    if (stage !== 2) return;
-    setDispatchBeat(0);
-    const id = window.setTimeout(() => setDispatchBeat(1), 1600);
-    return () => window.clearTimeout(id);
-  }, [stage]);
 
   const cycle = STAGES[stage];
   const somatic = somaticIndex(stage, dispatchBeat);
@@ -253,7 +248,7 @@ export default function FoodShareOrchestrationDiagram() {
                   type="button"
                   aria-pressed={selected}
                   onClick={() => {
-                    setStage(item.id);
+                    setTick(item.id * 2);
                     setPaused(true);
                   }}
                   className={`rounded-full px-4 py-2 text-xs font-medium tracking-tight transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
@@ -344,7 +339,7 @@ export default function FoodShareOrchestrationDiagram() {
                 coOn ? TONE_CLASS.blue : GHOST
               }`}
             >
-              SaaS & Paid Delivery Revenue Subsidizes Free 501(c)(3) Rescue
+              SaaS & Paid Delivery Revenue Subsidizes Free 501(c)(3) Rescue.
             </div>
             <Slot active={workOn} tone="amber" className="px-4 py-4 text-left md:text-center">
               <p>FoodShare.work (501c3 Logistics & AI Engine)</p>
@@ -436,10 +431,20 @@ export default function FoodShareOrchestrationDiagram() {
               <div className="relative min-h-28">
                 <div
                   className={`flex min-h-28 items-center justify-center rounded-xl px-3 py-4 text-center text-xs leading-snug font-medium tracking-tight transition-all duration-500 ease-in-out md:text-sm ${
-                    somatic === null ? GHOST : TONE_CLASS[SOMATIC[somatic].tone]
+                    somatic === null && !(stage === 2 && paused)
+                      ? GHOST
+                      : TONE_CLASS[
+                          stage === 2 && paused
+                            ? "amber"
+                            : SOMATIC[somatic ?? 0].tone
+                        ]
                   }`}
                 >
-                  {somatic === null ? "Awaiting dispatch" : SOMATIC[somatic].title}
+                  {stage === 2 && paused
+                    ? "2. <3s Fitts's Claim → 3. Haversine GPS ≤50m"
+                    : somatic === null
+                      ? "Awaiting dispatch"
+                      : SOMATIC[somatic].title}
                 </div>
               </div>
             </div>

@@ -46,10 +46,7 @@ function renderInline(text: string, key: string): ReactNode[] {
         const id = `${key}-c${serial}`;
         serial += 1;
         nodes.push(
-          <code
-            key={id}
-            className="font-mono text-[0.92em] text-zinc-100"
-          >
+          <code key={id} className="font-mono text-[0.92em] text-zinc-100">
             {text.slice(index + 1, end)}
           </code>,
         );
@@ -85,9 +82,7 @@ export function Rich({ text }: { text: string }) {
 }
 
 export function P({ children }: { children: ReactNode }) {
-  return (
-    <p className="text-base leading-relaxed text-zinc-300">{children}</p>
-  );
+  return <p className="text-base leading-relaxed text-zinc-300">{children}</p>;
 }
 
 export function Prose({ text }: { text: string }) {
@@ -155,7 +150,13 @@ export function Section({
   );
 }
 
-export function SourceQuote({ quote, source }: { quote: string; source: string }) {
+export function SourceQuote({
+  quote,
+  source,
+}: {
+  quote: string;
+  source: string;
+}) {
   return (
     <blockquote className="border-l border-white/10 pl-6">
       <p className="text-base leading-relaxed text-zinc-300">

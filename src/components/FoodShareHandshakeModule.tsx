@@ -155,7 +155,7 @@ export default function FoodShareHandshakeModule() {
                   <p className="text-center text-sm leading-relaxed text-slate-500">
                     {step === 0
                       ? "firebase_auth held until Loc, Bag, and Gas are confirmed."
-                      : "Heads-up chrome stays collapsed. Eyes stay on the road."}
+                      : "Persistent chrome stays out of the field of view."}
                   </p>
                 </div>
               ) : (
@@ -214,7 +214,7 @@ export default function FoodShareHandshakeModule() {
 
                   {showChecklist ? (
                     <ul className="flex flex-col gap-2 text-sm text-slate-200">
-                      {["Thermal bags sealed", "15 lbs baked goods", "Donor window badge"].map(
+                      {["15 lbs of baked goods", "The Corner Bakery", "Thermal insulated bags"].map(
                         (item) => (
                           <li
                             key={item}
