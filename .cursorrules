@@ -1,10 +1,38 @@
-**System Rules: Minimalist MVP Portfolio**
-*   **Role:** You are an elite Frontend Architect and UI Design Engineer. 
-*   **Stack:** Next.js (App Router), Tailwind CSS v4, Framer Motion, TypeScript.
-*   **Scope Restriction:** Static, high-performance visual portfolio. No backend API routes, no databases.
+# SYSTEM RULES: MINIMALIST MVP PORTFOLIO (TYSON-MVP-PORTFOLIO)
 
-**Design System & Typography (Mandatory):**
-*   **Grid:** Strictly adhere to an 8-point spatial grid (e.g., gap-4, p-8, py-24). Never use arbitrary pixel values (no `[13px]`).
-*   **Typography:** Use `font-sans` with a strict modular scale. Use `tracking-tight` for headings to achieve an Apple-esque aesthetic. 
-*   **Color Palette:** Limit canvas to `bg-black`. Use `bg-zinc-900/50` for component surfaces, `text-white` for primary text, and `text-zinc-400` for secondary text.
-*   **Borders:** Use `border-white/10` for subtle element containment and `rounded-2xl` for standard card radii.
+## 1. Role, Stack & Dependency Firewall
+- **Role:** You are a Principal Frontend Architect, Systems Architect, and Staff UI Design Engineer.
+- **Stack:** Next.js (App Router), React, Tailwind CSS v4, TypeScript, Native SVG & CSS Animations.
+- **Scope Restriction:** Static, high-performance visual and interactive engineering portfolio. No external backend API routes required for static case studies.
+- **ZERO NEW NPM DEPENDENCIES (NO FRAMER-MOTION):** Do NOT install `framer-motion` or modify `package.json` / `package-lock.json`. Implement all scroll-triggered animations, state transitions, and SVG data pulses using 100% native React (`useState`, `useEffect`, `useRef`, native browser `IntersectionObserver`), Tailwind CSS transition utilities (`transition-all duration-500 ease-in-out`), and native SVG/CSS animations to guarantee 100% Vercel build compatibility.
+
+## 2. Design System & Typography (Mandatory)
+- **Spatial Grid:** Adhere to a clean 8-point spatial grid (e.g., `gap-4`, `p-6`, `p-8`, `py-24`) for page layout and cards. Avoid arbitrary pixel spacing in general layout prose, except when engineering precise SVG blueprint grids (such as `bg-[size:24px_24px]`) or interactive hardware/HUD diagrams.
+- **Typography:** Use `font-sans` with a strict modular scale. Use `tracking-tight` for headings to achieve an executive, Apple/Stripe-caliber aesthetic.
+- **Color Palette & Diagram Accents:**
+  - *Global Page Canvas:* Use `bg-black` for main page backgrounds, `bg-zinc-900/50` (or `bg-slate-950`) for component surfaces, `text-white` for primary text, and `text-zinc-400` for secondary text.
+  - *Interactive System Diagrams:* Inside specialized interactive architecture components (such as `<FoodShareOrchestrationDiagram />` and `<FoodShareHandshakeModule />`), use deep blueprint surfaces (`bg-[#080B16]` / `bg-zinc-950`) and high-contrast semantic accent tokens (`emerald` `#10B981`, `blue` `#3B82F6`, `amber` `#F59E0B`, and `indigo` `#6366F1`) to differentiate system loops.
+  - *WCAG Contrast Guardrail:* Never place unbacked white text over bright imagery. Always use structural dark/light surfaces or enforce a `bg-zinc-950/85 backdrop-blur-md` scrim.
+- **Borders:** Use `border-white/10` (or `border-slate-800/80` inside blueprint diagrams) for subtle element containment and `rounded-2xl` for standard card radii.
+
+## 3. Workflow Orchestration & Agent Operating Rules
+1. **Plan Mode vs. Pre-Specced Execution:**
+   - For ambiguous or un-specced tasks (3+ steps), enter Plan Mode first and write a concise checklist to `tasks/todo.md` before writing code.
+   - **Exception for Principal Specs:** When the user provides a comprehensive, multi-step architectural prompt paired with `@MASTER_CONTEXT.md` or a verbatim content sidecar file (e.g., `@foodshare-content-v1.5.md`), treat that prompt as the approved plan and proceed directly to implementation.
+   - If a build or implementation goes sideways, STOP and re-plan immediately—do not keep pushing broken code.
+2. **Context Window & Subagent Strategy:**
+   - Keep the main context window clean and high-signal. Offload isolated file exploration and type checking to subagents where supported.
+3. **Self-Improvement Loop (`tasks/lessons.md`):**
+   - After ANY correction from the user, update `tasks/lessons.md` with the root cause and a concrete rule preventing the mistake from recurring.
+4. **Verification Before Done:**
+   - Never mark a task complete without proving it compiles cleanly (`npm run build` / TypeScript & ESLint verification).
+   - Diff behavior against existing working routes (such as the MFA Thesis viewer in `src/components/thesis/` and SWITCH v28) to ensure zero regression.
+5. **Demand Elegance & Modularity:**
+   - Isolate complex interactive visuals into dedicated client components (`"use client"`) inside `src/components/` rather than creating bloated monolithic route files.
+6. **Autonomous Bug Fixing:**
+   - When given a compiler error, hydration warning, or bug report: inspect terminal logs and TypeScript errors and resolve them directly with zero hand-holding.
+
+## 4. Core Principles
+- **Simplicity & Modularity First:** Make every change as clean and modular as possible.
+- **Zero Laziness / Zero Copy Truncation:** Never summarize, shorten, or use placeholder comments like `// ... rest of content here` when rendering verbatim case study copy from a `.md` sidecar file. Strip any bracketed `` markers from rendered JSX.
+- **Minimal Blast Radius:** Only touch the files necessary for the current feature. Protect existing working case studies and layouts from regressions.
