@@ -28,7 +28,10 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
     video.addEventListener("canplay", markReady);
     return () => video.removeEventListener("canplay", markReady);
   }, [project.videoSrc]);
-  const invertFallback = project.imagePath.includes("foodshare") && !videoReady;
+  const invertFallback =
+    project.imagePath === "/foodshare.png" &&
+    Boolean(project.videoSrc) &&
+    !videoReady;
   const objectPosition =
     project.id === "ergoclick"
       ? "object-[85%_center]"

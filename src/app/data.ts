@@ -31,6 +31,16 @@ export const portfolioData: PortfolioData = {
   },
   projects: [
     {
+      id: "foodshare-ecosystem",
+      title: "FoodShare",
+      role: "Founder, Principal Systems Architect & Lead Product Designer",
+      description:
+        "A 4-sided logistics marketplace bridging FoodShare.co, a for-profit patron engine, with FoodShare.work, a 501(c)(3) last-mile rescue network.",
+      imagePath: "/images/foodshare/sketch-webapp-iterations.png",
+      tags: ["4-Sided Marketplace", "Somatic UI", "Redis Geospatial", "Supabase"],
+      slug: "foodshare",
+    },
+    {
       id: "biofilm-sim",
       title: "Interactive 3D Mechanical Simulation",
       role: "Lead Creative Technologist & 3D Modeler",
@@ -66,17 +76,6 @@ export const portfolioData: PortfolioData = {
         "Editorial Curation",
       ],
       slug: "switch-journal",
-    },
-    {
-      id: "foodshare-ecosystem",
-      title: "Multi-Sided Cyber-Physical Logistics",
-      role: "Lead Product Designer & Founder",
-      description:
-        "Architected a 4-sided value exchange ecosystem mapping donors, volunteers, and distribution nodes.",
-      videoSrc:
-        "https://cdn.coverr.co/videos/coverr-clouds-and-mountains-5675/1080p.mp4",
-      imagePath: "/foodshare.png",
-      tags: ["Systems Architecture", "Logistics", "Product Strategy"],
     },
     {
       id: "ergoclick",

@@ -399,3 +399,5 @@ export default function ProjectCaseStudy({ study }: ProjectCaseStudyProps) {
     </ProjectStudyFrame>
   );
 }
+
+export { default as FoodShareProject } from "@/components/foodshare/FoodShareProject";

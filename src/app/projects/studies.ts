@@ -74,6 +74,16 @@ export interface CaseStudy {
 
 export const mfaThesisSlug = "algorithmic-art-systems";
 
+export const foodshareSlug = "foodshare";
+
+export const foodshareMeta = {
+  slug: foodshareSlug,
+  title:
+    "FoodShare: Architecting a 4-Sided Logistics Marketplace, Hybrid Social Enterprise & Predictive AI Routing Engine",
+  summary:
+    "From Seed to Scale: How lived experience across three gig-economy delivery platforms and industrial logistics auditing led me to architect a self-sustaining economy—bridging a for-profit SaaS customer-acquisition engine (FoodShare.co) with a 501(c)(3) last-mile rescue network (FoodShare.work).",
+};
+
 const simulationStill: Pick<CaseStudyImage, "src" | "width" | "height"> = {
   src: "/sim.png",
   width: 3292,
@@ -524,5 +534,20 @@ export function getCaseStudy(slug: string): CaseStudy | undefined {
 }
 
 export function getCaseStudyParams(): { slug: string }[] {
-  return caseStudies.map((study) => ({ slug: study.slug }));
+  return [
+    ...caseStudies.map((study) => ({ slug: study.slug })),
+    { slug: foodshareSlug },
+  ];
+}
+
+export function getStudyMeta(
+  slug: string,
+): { title: string; summary: string } | undefined {
+  if (slug === foodshareSlug) {
+    return { title: foodshareMeta.title, summary: foodshareMeta.summary };
+  }
+
+  const study = getCaseStudy(slug);
+  if (!study) return undefined;
+  return { title: study.title, summary: study.summary };
 }
