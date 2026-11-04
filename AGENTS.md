@@ -5,9 +5,9 @@
 - **Exception for Principal Specs:** When the user provides a comprehensive, multi-step architectural prompt paired with `@MASTER_CONTEXT.md` or a verbatim content sidecar file (e.g., `@foodshare-content-v1.5.md`), treat that prompt as the approved plan and proceed directly to implementation.
 - If a build or implementation goes sideways, STOP and re-plan immediately—do not keep pushing broken code.
 
-## 2. Context Window & Subagent Strategy
-- Keep the main context window clean and high-signal.
-- Offload isolated file exploration, type checking, and parallel analysis to subagents where supported, assigning one focused task per subagent.
+## 2. Stack & Dependency Guardrails
+- **Stack:** Next.js (App Router), React, Tailwind CSS v4, TypeScript, Native SVG/CSS Animations.
+- **ZERO NEW NPM DEPENDENCIES (NO FRAMER-MOTION):** Do NOT install `framer-motion` or modify `package.json` / `package-lock.json`. Use 100% native React (`useState`, `useEffect`, `useRef`, `IntersectionObserver`), Tailwind CSS transitions (`transition-all duration-500`), and native SVG/CSS animations.
 
 ## 3. Self-Improvement Loop (`tasks/lessons.md`)
 - After ANY correction from the user, update `tasks/lessons.md` with the root cause and pattern.
@@ -30,7 +30,7 @@
 
 ## Core Principles
 - **Simplicity & Modularity First:** Make every change as clean and modular as possible. Isolate complex interactive visuals into dedicated client components inside `src/components/`.
-- **Zero Laziness / Zero Copy Truncation:** Find root causes. Never use placeholder comments like `// ... rest of content here` when rendering case study copy. Uphold Principal/Staff engineering standards.
+- **Zero Laziness / Zero Copy Truncation:** Find root causes. Never use placeholder comments like `// ... rest of content here` when rendering case study copy. Strip any bracketed `` markers from rendered JSX.
 - **Minimal Blast Radius:** Changes should only touch the files necessary for the current feature. Protect existing working case studies and layouts from regressions.
 
 <!-- BEGIN:nextjs-agent-rules -->
