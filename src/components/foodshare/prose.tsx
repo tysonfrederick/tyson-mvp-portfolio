@@ -269,6 +269,7 @@ export function Figure({
   caption,
   priority = false,
   contained = false,
+  viewport = false,
   className,
 }: {
   src: string;
@@ -278,29 +279,43 @@ export function Figure({
   caption?: ReactNode;
   priority?: boolean;
   contained?: boolean;
+  viewport?: boolean;
   className?: string;
 }) {
   return (
     <figure
-      className={`flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 ${className ?? ""}`}
+      className={`flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 ${className ?? ""}`}
     >
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        priority={priority}
-        sizes={
-          contained
-            ? "(min-width: 768px) 320px, 70vw"
-            : "(min-width: 1280px) 1152px, 100vw"
-        }
-        className={
-          contained
-            ? "mx-auto h-auto w-full max-w-xs shrink-0 object-contain"
-            : "h-auto w-full shrink-0"
-        }
-      />
+      {viewport ? (
+        <div className="relative flex h-[340px] w-full items-center justify-center overflow-hidden rounded-xl bg-zinc-950/80 p-2 md:h-[400px]">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            priority={priority}
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-contain p-2"
+          />
+        </div>
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          priority={priority}
+          sizes={
+            contained
+              ? "(min-width: 768px) 320px, 70vw"
+              : "(min-width: 1280px) 1152px, 100vw"
+          }
+          className={
+            contained
+              ? "mx-auto h-auto w-full max-w-xs shrink-0 object-contain"
+              : "h-auto w-full shrink-0"
+          }
+        />
+      )}
       {caption ? (
         <figcaption className="mt-auto border-t border-white/10 bg-zinc-950 px-6 py-4 text-sm leading-relaxed text-zinc-400">
           {caption}

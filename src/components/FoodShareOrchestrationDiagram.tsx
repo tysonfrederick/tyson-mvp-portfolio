@@ -8,30 +8,31 @@ type Tone = "emerald" | "blue" | "amber" | "indigo";
 const STAGES = [
   {
     id: 0,
-    name: "Predictive Supply",
-    line: "ARIMA 24h & Smart Post",
-    short: "Supply",
+    label: "1. Supply",
+    title: "Stage 1 — Surplus Food Posted (Or Predicted by AI)",
+    subtitle: "Restaurants post 5+ lb batches in 30s · 24h ARIMA forecast",
     stroke: "#10B981",
   },
   {
     id: 1,
-    name: "4-Way Handshake",
-    line: "Redis SET NX PX 30000",
-    short: "Lock",
+    label: "2. 4-Way Lock",
+    title: "Stage 2 — 4-Way Match & 30-Second Lock",
+    subtitle:
+      "Locks batch only when Donor, Driver, Shelter & Patron align (Redis NX)",
     stroke: "#6366F1",
   },
   {
     id: 2,
-    name: "Last-Mile Dispatch",
-    line: "Haversine GPS ≤50m",
-    short: "Dispatch",
+    label: "3. Dispatch",
+    title: "Stage 3 — 30-Minute Rescue & Nutritional Routing",
+    subtitle: "One-tap volunteer pickup · Auto-verified within 50m GPS geofence",
     stroke: "#F59E0B",
   },
   {
     id: 3,
-    name: "Patron Capital Loop",
-    line: "Fv → Fi cross-side conversion",
-    short: "Patron",
+    label: "4. Patron Loop",
+    title: "Stage 4 — Self-Funding Patron Loop (Natural Capitalism)",
+    subtitle: "Diners eat at Donor venues for perks · SaaS revenue funds free rescue",
     stroke: "#3B82F6",
   },
 ] as const;
@@ -50,11 +51,11 @@ const GHOST =
   "border border-dashed border-slate-800 bg-slate-900/30 text-slate-600";
 
 const INGRESS = [
-  { id: "restaurants", label: "Restaurants (5+ lbs/wk)", row: 1 },
-  { id: "grocers", label: "Grocers & Markets", row: 1 },
-  { id: "patrons", label: "Patron Diners (Fi)", row: 1 },
-  { id: "schools", label: "Schools & Venues", row: 2 },
-  { id: "pledges", label: "$10/$25/$50 Micro-Pledges", row: 2 },
+  { id: "restaurants", label: "Restaurants (5+ lbs/wk)" },
+  { id: "grocers", label: "Grocers & Markets" },
+  { id: "patrons", label: "Patron Diners (Fi)" },
+  { id: "schools", label: "Schools & Venues" },
+  { id: "pledges", label: "Patron Micro-Pledges ($10–$50)" },
 ] as const;
 
 const TILES: { id: string; label: string; hint: string; tone: Tone }[] = [
@@ -62,16 +63,25 @@ const TILES: { id: string; label: string; hint: string; tone: Tone }[] = [
   { id: "Fi", label: "Fi", hint: "Patron", tone: "blue" },
   { id: "Fv", label: "Fv", hint: "Volunteer", tone: "emerald" },
   { id: "Fr", label: "Fr", hint: "Recipient", tone: "emerald" },
-  { id: "GPS", label: "GPS ≤50m", hint: "Haversine", tone: "amber" },
-  { id: "PATH", label: "PATH +40%", hint: "Tax receipt", tone: "amber" },
+  { id: "GPS", label: "GPS ≤50m", hint: "Auto-Verify", tone: "amber" },
+  { id: "PATH", label: "PATH +40%", hint: "Tax Receipt", tone: "amber" },
 ];
 
 const SOMATIC: { title: string; tone: Tone }[] = [
-  { title: "1. Loc/Bag/Gas Check", tone: "amber" },
-  { title: "2. <3s Fitts's Claim", tone: "emerald" },
-  { title: "3. Haversine GPS ≤50m", tone: "amber" },
   {
-    title: '4. "100 Fed" Card + 20% Donor Coupon (Fv → Fi)',
+    title: "1. Readiness Check (Location, Thermal Bags, Gas)",
+    tone: "amber",
+  },
+  {
+    title: "2. One-Tap Pickup Claim (<3s Thumb Bar)",
+    tone: "emerald",
+  },
+  {
+    title: "3. Auto-Verified GPS Drop-Off (≤50m)",
+    tone: "amber",
+  },
+  {
+    title: '4. "100 People Fed" Receipt + 20% Restaurant Coupon',
     tone: "blue",
   },
 ];
@@ -87,7 +97,9 @@ function ingressOn(id: string, stage: number) {
   if (stage === 1) {
     return id === "restaurants" || id === "patrons" || id === "schools";
   }
-  if (stage === 3) return id === "patrons" || id === "pledges";
+  if (stage === 3) {
+    return id === "restaurants" || id === "patrons" || id === "pledges";
+  }
   return false;
 }
 
@@ -100,7 +112,7 @@ function tileOn(id: string, stage: number) {
   if (stage === 0) return id === "Fd" || id === "PATH";
   if (stage === 1) return id === "Fd" || id === "Fi" || id === "Fv" || id === "Fr";
   if (stage === 2) return id === "Fv" || id === "GPS";
-  return id === "Fi" || id === "Fv";
+  return id === "Fd" || id === "Fi" || id === "Fv";
 }
 
 function recipientOn(id: string, stage: number) {
@@ -121,15 +133,17 @@ function Slot({
   tone,
   children,
   className = "",
+  box = "px-3 py-3 text-xs md:text-sm",
 }: {
   active: boolean;
   tone: Tone;
   children: ReactNode;
   className?: string;
+  box?: string;
 }) {
   return (
     <div
-      className={`rounded-xl px-3 py-3 text-center text-xs leading-snug font-medium tracking-tight transition-all duration-500 ease-in-out motion-reduce:transition-none md:text-sm ${
+      className={`rounded-xl text-center leading-snug font-medium tracking-tight transition-all duration-500 ease-in-out motion-reduce:transition-none ${box} ${
         active ? TONE_CLASS[tone] : GHOST
       } ${className}`}
     >
@@ -156,6 +170,28 @@ function Spine({ d, color, active }: { d: string; color: string; active: boolean
         className={active ? "fs-dash" : undefined}
       />
     </svg>
+  );
+}
+
+function LayerLink({
+  d,
+  color,
+  active,
+}: {
+  d: string;
+  color: string;
+  active: boolean;
+}) {
+  return (
+    <>
+      <div
+        className="mx-auto my-1 h-4 w-px border-l border-dashed border-emerald-500/50 md:hidden"
+        aria-hidden
+      />
+      <div className="hidden md:block">
+        <Spine d={d} color={color} active={active} />
+      </div>
+    </>
   );
 }
 
@@ -199,17 +235,23 @@ export default function FoodShareOrchestrationDiagram() {
   const cycle = STAGES[stage];
   const somatic = somaticIndex(stage, dispatchBeat);
   const coOn = stage === 3;
-  const workOn = stage === 0;
+  const workOn = stage === 0 || stage === 1;
+  const bridgeTone: Tone | null = stage === 1 ? "amber" : stage === 3 ? "blue" : null;
   const hubOn = stage === 1;
   const volunteerOn = stage === 2;
   const orchestrationOn = stage === 2;
   const hungryOn = stage === 2;
+  const topTraceOn = stage !== 2;
+  const dispatchStroke = dispatchBeat === 1 ? "#F59E0B" : "#10B981";
+  const bottomStroke = stage === 2 ? dispatchStroke : cycle.stroke;
+  const fleetStroke =
+    stage === 2 ? dispatchStroke : somatic !== null || volunteerOn ? "#10B981" : "#334155";
 
   return (
     <figure
       ref={rootRef}
-      className="overflow-hidden rounded-2xl border border-slate-800/80 bg-[#080B16] p-6 md:p-10"
-      aria-label={`FoodShare orchestration diagram, stage ${stage}, ${cycle.name}`}
+      className="rounded-2xl border border-slate-800/80 bg-[#080B16] p-6 md:p-10"
+      aria-label={`FoodShare orchestration diagram, ${cycle.title}`}
     >
       <style>{`
         @keyframes fs-dash {
@@ -223,20 +265,18 @@ export default function FoodShareOrchestrationDiagram() {
         }
       `}</style>
 
-      <div
-        className="rounded-2xl bg-[linear-gradient(to_right,#1e293b22_1px,transparent_1px),linear-gradient(to_bottom,#1e293b22_1px,transparent_1px)] bg-[size:24px_24px] p-4 md:p-6"
-      >
-        <div className="flex flex-col gap-4 border-b border-slate-800/80 pb-4 md:flex-row md:items-center md:justify-between">
+      <div className="rounded-2xl bg-[linear-gradient(to_right,#1e293b22_1px,transparent_1px),linear-gradient(to_bottom,#1e293b22_1px,transparent_1px)] bg-[size:24px_24px] p-4 md:p-6">
+        <div className="sticky top-16 z-20 -mx-4 flex flex-col gap-4 border-b border-slate-800/80 bg-[#080B16]/95 px-4 py-3 backdrop-blur-md md:static md:mx-0 md:flex-row md:items-center md:justify-between md:border-slate-800/80 md:bg-transparent md:px-0 md:py-0 md:pb-4 md:backdrop-blur-none">
           <div>
             <p className="text-[10px] font-medium tracking-[0.16em] text-slate-500 uppercase">
               {inView && !paused ? "Live cycle" : "Cycle held"}
             </p>
             <p className="mt-1 text-sm font-medium tracking-tight text-white">
-              Stage {stage} — {cycle.name}
+              {cycle.title}
             </p>
-            <p className="text-xs text-slate-400">{cycle.line}</p>
+            <p className="text-xs text-slate-400">{cycle.subtitle}</p>
             <p className="sr-only" aria-live="polite">
-              Stage {stage}. {cycle.name}. {cycle.line}
+              {cycle.title}. {cycle.subtitle}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -257,7 +297,7 @@ export default function FoodShareOrchestrationDiagram() {
                       : "bg-white/10 text-slate-300 hover:bg-white/15"
                   }`}
                 >
-                  {item.id} {item.short}
+                  {item.label}
                 </button>
               );
             })}
@@ -267,7 +307,7 @@ export default function FoodShareOrchestrationDiagram() {
               onClick={() => setPaused((current) => !current)}
               className="rounded-full border border-slate-700 px-4 py-2 text-xs font-medium tracking-tight text-slate-200 transition-all duration-500 ease-in-out hover:border-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              {paused ? "Auto-Cycle" : "Pause"}
+              {paused ? "Resume" : "Pause"}
             </button>
           </div>
         </div>
@@ -293,64 +333,61 @@ export default function FoodShareOrchestrationDiagram() {
 
         <div className="mt-6 flex flex-col">
           <LayerLabel index="01">Ingress</LayerLabel>
-          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-6">
-            {INGRESS.filter((slot) => slot.row === 1).map((slot) => (
+          <div className="mt-3 grid grid-cols-2 gap-2 md:grid-cols-5 md:gap-3">
+            {INGRESS.map((slot, index) => (
               <Slot
                 key={slot.id}
                 active={ingressOn(slot.id, stage)}
                 tone={ingressTone(slot.id)}
-                className="sm:col-span-2"
-              >
-                {slot.label}
-              </Slot>
-            ))}
-            {INGRESS.filter((slot) => slot.row === 2).map((slot, index) => (
-              <Slot
-                key={slot.id}
-                active={ingressOn(slot.id, stage)}
-                tone={ingressTone(slot.id)}
-                className={
-                  index === 0
-                    ? "sm:col-span-2 sm:col-start-2"
-                    : "sm:col-span-2"
-                }
+                box="px-2.5 py-2 text-xs md:px-4 md:py-3 md:text-sm"
+                className={index === INGRESS.length - 1 ? "col-span-2 md:col-span-1" : ""}
               >
                 {slot.label}
               </Slot>
             ))}
           </div>
 
-          <Spine
-            active
+          <LayerLink
+            active={topTraceOn}
             color={cycle.stroke}
             d="M200 0 V14 H360 V32 M1000 0 V14 H840 V32 M600 0 V32"
           />
 
           <LayerLabel index="02">Gateway</LayerLabel>
           <div className="mt-3 grid grid-cols-1 items-stretch gap-3 md:grid-cols-[minmax(0,1fr)_10.5rem_minmax(0,1fr)] md:items-center">
-            <Slot active={coOn} tone="blue" className="px-4 py-4 text-left md:text-center">
+            <Slot
+              active={coOn}
+              tone="blue"
+              box="px-4 py-4 text-xs md:text-sm"
+              className="text-left md:text-center"
+            >
               <p>FoodShare.co (For-Profit SaaS & Patron Engine)</p>
               <p className="mt-2 text-[10px] font-medium tracking-[0.12em] uppercase opacity-80">
-                Next.js · Prisma · Stripe B2B · Customer Acquisition
+                NEW CUSTOMER ACQUISITION · B2B SAAS · PATRON PERKS
               </p>
             </Slot>
             <div
               className={`rounded-full px-3 py-3 text-center text-[11px] leading-snug font-medium tracking-tight transition-all duration-500 ease-in-out ${
-                coOn ? TONE_CLASS.blue : GHOST
+                bridgeTone ? TONE_CLASS[bridgeTone] : GHOST
               }`}
             >
               SaaS & Paid Delivery Revenue Subsidizes Free 501(c)(3) Rescue.
             </div>
-            <Slot active={workOn} tone="amber" className="px-4 py-4 text-left md:text-center">
+            <Slot
+              active={workOn}
+              tone="amber"
+              box="px-4 py-4 text-xs md:text-sm"
+              className="text-left md:text-center"
+            >
               <p>FoodShare.work (501c3 Logistics & AI Engine)</p>
               <p className="mt-2 text-[10px] font-medium tracking-[0.12em] uppercase opacity-80">
-                Node/Fastify · Redis Geospatial · ARIMA 24h Surplus
+                FREE LAST-MILE DISPATCH · REDIS GEO-LOCKS · 24H AI FORECAST
               </p>
             </Slot>
           </div>
 
-          <Spine
-            active
+          <LayerLink
+            active={topTraceOn}
             color={cycle.stroke}
             d="M300 0 V14 H200 V32 M900 0 V14 H1000 V32 M600 0 V32"
           />
@@ -379,7 +416,7 @@ export default function FoodShareOrchestrationDiagram() {
             </div>
 
             <div
-              className={`flex flex-col items-center justify-center gap-3 rounded-2xl border border-indigo-400/70 bg-indigo-500/15 px-4 py-6 text-center text-indigo-50 shadow-lg shadow-indigo-500/20 transition-all duration-500 ease-in-out motion-reduce:transition-none ${
+              className={`flex flex-col items-center justify-center gap-3 rounded-2xl border border-indigo-400/70 bg-indigo-500/15 p-4 text-center text-indigo-50 shadow-lg shadow-indigo-500/20 transition-all duration-500 ease-in-out motion-reduce:transition-none md:p-6 ${
                 hubOn
                   ? "scale-[1.03] shadow-[0_0_42px_rgba(99,102,241,0.45)]"
                   : ""
@@ -404,79 +441,76 @@ export default function FoodShareOrchestrationDiagram() {
                     : "bg-indigo-950/60 text-indigo-100"
                 }`}
               >
-                ATOMIC LOCK: Redis SET NX PX 30000
+                4-WAY ATOMIC LOCK (30s Redis Geo-Lock)
               </p>
             </div>
 
             <div className="flex flex-col">
-              <Slot active={volunteerOn} tone="emerald" className="px-4 py-4">
+              <Slot
+                active={volunteerOn}
+                tone="emerald"
+                box="px-4 py-4 text-xs md:text-sm"
+              >
                 Volunteer Fleet (Fv)
               </Slot>
-              <svg
-                viewBox="0 0 4 28"
-                className="mx-auto h-7 w-4"
-                aria-hidden
-              >
+              <svg viewBox="0 0 4 28" className="mx-auto h-7 w-4" aria-hidden>
                 <line
                   x1="2"
                   y1="0"
                   x2="2"
                   y2="28"
-                  stroke={volunteerOn || somatic !== null ? "#10B981" : "#334155"}
+                  stroke={fleetStroke}
                   strokeWidth="1.5"
                   strokeDasharray="3 3"
-                  className={volunteerOn || somatic !== null ? "fs-dash" : undefined}
+                  className={
+                    volunteerOn || somatic !== null ? "fs-dash" : undefined
+                  }
                 />
               </svg>
-              <div className="relative min-h-28">
-                <div
-                  className={`flex min-h-28 items-center justify-center rounded-xl px-3 py-4 text-center text-xs leading-snug font-medium tracking-tight transition-all duration-500 ease-in-out md:text-sm ${
-                    somatic === null && !(stage === 2 && paused)
-                      ? GHOST
-                      : TONE_CLASS[
-                          stage === 2 && paused
-                            ? "amber"
-                            : SOMATIC[somatic ?? 0].tone
-                        ]
-                  }`}
-                >
-                  {stage === 2 && paused
-                    ? "2. <3s Fitts's Claim → 3. Haversine GPS ≤50m"
-                    : somatic === null
-                      ? "Awaiting dispatch"
-                      : SOMATIC[somatic].title}
-                </div>
+              <div
+                className={`flex min-h-[64px] items-center justify-center rounded-xl px-4 py-3 text-center text-xs leading-snug font-medium tracking-tight transition-all duration-500 ease-in-out motion-reduce:transition-none md:min-h-[110px] md:text-sm ${
+                  somatic === null ? GHOST : TONE_CLASS[SOMATIC[somatic].tone]
+                }`}
+              >
+                {somatic === null
+                  ? "Awaiting 4-Way Match..."
+                  : SOMATIC[somatic].title}
               </div>
             </div>
           </div>
 
-          <Spine
-            active={orchestrationOn || volunteerOn}
-            color={cycle.stroke}
+          <LayerLink
+            active={orchestrationOn}
+            color={bottomStroke}
             d="M200 0 V14 H600 V32 M1000 0 V14 H600 M600 0 V32"
           />
 
           <LayerLabel index="04">Orchestration</LayerLabel>
           <div className="mt-3">
-            <Slot active={orchestrationOn} tone="indigo" className="px-4 py-4">
-              Orchestration • Supabase pgvector Macro-Nutritional Matching
-              (Protein / Produce / Carbs)
+            <Slot
+              active={orchestrationOn}
+              tone="indigo"
+              box="px-4 py-4 text-xs md:text-sm"
+            >
+              Smart Nutritional Routing · Matches Protein, Produce & Meals to
+              Shelter Needs (Supabase pgvector)
             </Slot>
           </div>
 
-          <Spine
+          <LayerLink
             active={orchestrationOn || stage === 0}
-            color={cycle.stroke}
+            color={bottomStroke}
             d="M600 0 V14 H200 V32 M600 14 H1000 V32 M600 0 V32"
           />
 
           <LayerLabel index="05">Beneficiaries</LayerLabel>
-          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="mt-3 grid grid-cols-3 gap-2 md:gap-4">
             {RECIPIENTS.map((slot) => (
               <Slot
                 key={slot.id}
                 active={recipientOn(slot.id, stage)}
                 tone="emerald"
+                box="px-1.5 py-2 text-xs md:px-3 md:py-3 md:text-sm"
               >
                 {slot.label}
               </Slot>
@@ -487,8 +521,8 @@ export default function FoodShareOrchestrationDiagram() {
               hungryOn ? TONE_CLASS.emerald : GHOST
             }`}
           >
-            THE HUNGRY (Ultimate Beneficiary) • Dignified, Macro-Balanced Meals
-            • 1 lb. Rescued = 10 People Fed (100,000 Meals/Wk Model)
+            THE HUNGRY (Ultimate Beneficiary) · Dignified, Macro-Balanced Meals
+            · 1 lb. Rescued = 10 People Fed (100,000 Meals/Wk Model)
           </div>
         </div>
       </div>

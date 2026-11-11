@@ -70,8 +70,9 @@ export default function InteractionSection() {
         </li>
       </ol>
       <FoodShareHandshakeModule />
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2">
         <Figure
+          viewport
           src="/images/foodshare/foodshare-v023-flowmap.jpg"
           alt="Photograph of the FoodShare Volunteer Mobile App Diagram and Map v0.2.3, with the Loc, Bag, Gas check-in node and handwritten Java and XML notes."
           width={750}
@@ -81,6 +82,7 @@ export default function InteractionSection() {
           }
         />
         <Figure
+          viewport
           src="/images/foodshare/sketch-volunteer-ui-canvas.png"
           alt="foodsdiagram.sketch artboard of the volunteer Android screens, from the dashboard through later copies, with bottom action bars and confirmation modals."
           width={1856}

@@ -107,6 +107,15 @@ export default function VentureSection() {
       </Subhead>
       <Prose text="During a concentrated two-month pre-launch growth sprint, I treated customer and partner acquisition as an empirical engineering problem—wiring `foodshare.co` and `foodshare.co/partner.html` into **Google Analytics** (`Active Users` real-time funnel tracking), optimizing search-index SEO keywords around food insecurity and commercial waste, and running structured A/B paid acquisition experiments across Facebook and Instagram/X (`@foodshareco`):" />
       <DataTable headers={GTM_HEADERS} rows={GTM_ROWS} />
+      <Figure
+        src="/images/foodshare/foodshare-fb-ab-test-analytics.png"
+        alt="2017 Facebook Promotions dashboard showing the FoodShare local ad tests, reach, and cost per thousand impressions."
+        width={2012}
+        height={1126}
+        caption={
+          <Rich text="**2017 Growth Telemetry & A/B Ad Matrix:** Primary-source capture of the 2017 Facebook Promotions dashboard validating the 2x2 A/B experiment ($17.41 micro-spend → 5,137 local users reached and 4,792+ local impressions at ~$2.40 CPM), paired with Google Analytics (`Active Users`) real-time funnel tracking." />
+        }
+      />
       <BulletList
         items={[
           "**Total Micro-Test Efficiency & Institutional Validation:** Across just **$17.41 in validation ad spend**, the campaigns reached **5,137 local users** and generated **4,792+ targeted local impressions** (~$2.40 CPM), building a pre-launch community of **508 followers on Instagram** and **70 followers on Facebook**—and organically attracting verified institutional followers including **Marc Perrone** (International President of the 1.3-million-member **United Food & Commercial Workers / UFCW** union representing grocery and food-retail workers across North America) and **StartUp Mindset** (Top 50 Entrepreneurship publication).",
@@ -122,24 +131,17 @@ export default function VentureSection() {
           "**Closing the Architectural Loop (2023–2026 — From Mobile & Voice to Spatial XR):** That 4-year longitudinal study in **Zero-UI / Voice accessibility** and responsive microphone behaviors, followed by nearly three years auditing high-velocity physical-to-digital logistics telemetry and optical camera/scanner ergonomics at **Amazon's SCK4 Inbound Cross-Dock**, completed my **Somatic UI Spectrum**. Today, those hard-won lessons in ambient computing, heads-up multimodal orchestration, mistake-proof human factors, and industrial exception handling directly power FoodShare's **2026 Next.js, Redis, and Supabase Agentic Architecture**.",
         ]}
       />
-      <Figure
-        src="/images/foodshare/foodshare-logo-evolution-grid.png"
-        alt="Six-panel grid of the FoodShare mark, from Post-it sketches through the final four-segment fs ribbon."
-        width={1862}
-        height={1656}
-        caption={
-          <Rich text="**Brand Evolution Matrix:** Curated 3x2 grid documenting the industrial design progression from raw analog Post-it note ideation (top row: fusing a heart, upward growth arrow, and `f`/`s` ligature) to digital vector synthesis and the final 4-segment `fs` continuous ribbon (bottom row)." />
-        }
-      />
-      <Figure
-        src="/images/foodshare/foodshare-fb-ab-test-analytics.png"
-        alt="2017 Facebook Promotions dashboard showing the FoodShare local ad tests, reach, and cost per thousand impressions."
-        width={2012}
-        height={1126}
-        caption={
-          <Rich text="**2017 Growth Telemetry & A/B Ad Matrix:** Primary-source capture of the 2017 Facebook Promotions dashboard validating the 2x2 A/B experiment ($17.41 micro-spend → 5,137 local users reached and 4,792+ local impressions at ~$2.40 CPM), paired with Google Analytics (`Active Users`) real-time funnel tracking." />
-        }
-      />
+      <div className="mx-auto w-full max-w-4xl">
+        <Figure
+          src="/images/foodshare/foodshare-logo-evolution-grid.png"
+          alt="Six-panel grid of the FoodShare mark, from Post-it sketches through the final four-segment fs ribbon."
+          width={1862}
+          height={1656}
+          caption={
+            <Rich text="**Brand Evolution Matrix:** Curated 3x2 grid documenting the industrial design progression from raw analog Post-it note ideation (top row: fusing a heart, upward growth arrow, and `f`/`s` ligature) to digital vector synthesis and the final 4-segment `fs` continuous ribbon (bottom row)." />
+          }
+        />
+      </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Figure
           src="/images/foodshare/Social-Partner-Hero.JPG"

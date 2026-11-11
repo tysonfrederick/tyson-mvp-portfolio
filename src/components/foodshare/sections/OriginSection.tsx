@@ -30,28 +30,34 @@ export default function OriginSection() {
       id="section-1"
       title="1. The Origin Story: A Silicon Valley Paradox & The Economics of Trashing vs. Donating"
     >
-      <Prose text="FoodShare wasn't born in a boardroom—it was born on the pavement of San Jose. While completing my MFA at San Jose State University and driving for three major on-demand platforms (DoorDash, Lyft, and Postmates), I lived inside the mechanics of geo-locative logistics—deconstructing their multi-sided routing flows and filing UI bug reports from the driver's seat. One week, I was distributing blankets and socks to unhoused neighbors surviving a freezing cold snap in downtown San Jose; the next, I was delivering $50 lunches in Los Gatos while watching restaurants throw away pans of fresh, untouched food at closing time." />
-      <SourceQuote
-        quote={`"Looking around, we have many conflicts saturating complex world problems. A 99-cent soda is packaged in a bottle that won't degrade for thousands of years, to eventually becoming food for water life within the very seas that it erodes... The problem is much grimmer for many humans, and it's our job to take waste and re-use it for greater purposes."`}
-        source="**Primary Source Excerpt: FoodShare Creator Story (2016 Kickstarter Draft)**"
-      />
-      <Prose text="The problem wasn't a lack of food or goodwill—it was a **systemic failure of last-mile logistics and misaligned incentives**." />
-      <Figure
-        src="/images/foodshare/Eatenbeforewepass.jpg"
-        alt="Four-stage decaying carrot campaign still. The carrot asks to be eaten before it is thrown out."
-        width={1080}
-        height={1080}
-        caption={
-          <>
-            <p className="text-zinc-300">
-              <Rich text={`"All I want is to be eaten... before I'm thrown out."`} />
-            </p>
-            <p className="mt-2">
-              <Rich text="**The Perishable Spoilage Clock (2016 Campaign Artifact):** Unlike palletized dry goods, prepared restaurant food operates on a strict biological countdown. With less than 2% of edible surplus rescued and 85% sent to landfills, any platform that cannot coordinate supply, transport, and shelter intake before the fourth stage of decay loses the asset to landfill methane." />
-            </p>
-          </>
-        }
-      />
+      <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
+        <div className="flex flex-col gap-6 lg:col-span-7">
+          <Prose text="FoodShare wasn't born in a boardroom—it was born on the pavement of San Jose. While completing my MFA at San Jose State University and driving for three major on-demand platforms (DoorDash, Lyft, and Postmates), I lived inside the mechanics of geo-locative logistics—deconstructing their multi-sided routing flows and filing UI bug reports from the driver's seat. One week, I was distributing blankets and socks to unhoused neighbors surviving a freezing cold snap in downtown San Jose; the next, I was delivering $50 lunches in Los Gatos while watching restaurants throw away pans of fresh, untouched food at closing time." />
+          <SourceQuote
+            quote={`"Looking around, we have many conflicts saturating complex world problems. A 99-cent soda is packaged in a bottle that won't degrade for thousands of years, to eventually becoming food for water life within the very seas that it erodes... The problem is much grimmer for many humans, and it's our job to take waste and re-use it for greater purposes."`}
+            source="**Primary Source Excerpt: FoodShare Creator Story (2016 Kickstarter Draft)**"
+          />
+          <Prose text="The problem wasn't a lack of food or goodwill—it was a **systemic failure of last-mile logistics and misaligned incentives**." />
+        </div>
+        <div className="lg:col-span-5">
+          <Figure
+            src="/images/foodshare/Eatenbeforewepass.jpg"
+            alt="Four-stage decaying carrot campaign still. The carrot asks to be eaten before it is thrown out."
+            width={1080}
+            height={1080}
+            caption={
+              <>
+                <p className="text-zinc-300">
+                  <Rich text={`"All I want is to be eaten... before I'm thrown out."`} />
+                </p>
+                <p className="mt-2">
+                  <Rich text="**The Perishable Spoilage Clock (2016 Campaign Artifact):** Unlike palletized dry goods, prepared restaurant food operates on a strict biological countdown. With less than 2% of edible surplus rescued and 85% sent to landfills, any platform that cannot coordinate supply, transport, and shelter intake before the fourth stage of decay loses the asset to landfill methane." />
+                </p>
+              </>
+            }
+          />
+        </div>
+      </div>
       <Subhead>
         Founder-Led Discovery: Gap Analysis & The Fiscal Math of Donating vs. Trashing
       </Subhead>

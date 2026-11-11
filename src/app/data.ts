@@ -36,7 +36,7 @@ export const portfolioData: PortfolioData = {
       role: "Founder, Principal Systems Architect & Lead Product Designer",
       description:
         "A 4-sided logistics marketplace bridging FoodShare.co, a for-profit patron engine, with FoodShare.work, a 501(c)(3) last-mile rescue network.",
-      imagePath: "/images/foodshare/sketch-webapp-iterations.png",
+      imagePath: "/images/foodshare/Social-Partner-Hero.JPG",
       tags: ["4-Sided Marketplace", "Somatic UI", "Redis Geospatial", "Supabase"],
       slug: "foodshare",
     },
