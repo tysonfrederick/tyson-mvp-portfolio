@@ -27,7 +27,7 @@ const FISCAL_ROWS = [
 export default function OriginSection() {
   return (
     <Section
-      id="origin"
+      id="section-1"
       title="1. The Origin Story: A Silicon Valley Paradox & The Economics of Trashing vs. Donating"
     >
       <Prose text="FoodShare wasn't born in a boardroom—it was born on the pavement of San Jose. While completing my MFA at San Jose State University and driving for three major on-demand platforms (DoorDash, Lyft, and Postmates), I lived inside the mechanics of geo-locative logistics—deconstructing their multi-sided routing flows and filing UI bug reports from the driver's seat. One week, I was distributing blankets and socks to unhoused neighbors surviving a freezing cold snap in downtown San Jose; the next, I was delivering $50 lunches in Los Gatos while watching restaurants throw away pans of fresh, untouched food at closing time." />

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Fragment, type ReactNode } from "react";
+import SchemaDisclosure from "./SchemaDisclosure";
 
 function findItalicEnd(text: string, from: number): number {
   for (let index = from; index < text.length; index += 1) {
@@ -46,7 +47,10 @@ function renderInline(text: string, key: string): ReactNode[] {
         const id = `${key}-c${serial}`;
         serial += 1;
         nodes.push(
-          <code key={id} className="font-mono text-[0.92em] text-zinc-100">
+          <code
+            key={id}
+            className="rounded border border-white/10 bg-zinc-900 px-1.5 py-0.5 font-mono text-[0.85em] text-emerald-300/90"
+          >
             {text.slice(index + 1, end)}
           </code>,
         );
@@ -82,7 +86,9 @@ export function Rich({ text }: { text: string }) {
 }
 
 export function P({ children }: { children: ReactNode }) {
-  return <p className="text-base leading-relaxed text-zinc-300">{children}</p>;
+  return (
+    <p className="max-w-3xl text-base leading-relaxed text-zinc-300">{children}</p>
+  );
 }
 
 export function Prose({ text }: { text: string }) {
@@ -95,7 +101,7 @@ export function Prose({ text }: { text: string }) {
 
 export function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="flex max-w-3xl flex-col gap-4">
       {items.map((item) => (
         <li
           key={item}
@@ -110,7 +116,7 @@ export function BulletList({ items }: { items: string[] }) {
 
 export function OrderedList({ items }: { items: string[] }) {
   return (
-    <ol className="flex list-decimal flex-col gap-4 pl-6 marker:text-zinc-400">
+    <ol className="flex max-w-3xl list-decimal flex-col gap-4 pl-6 marker:text-zinc-400">
       {items.map((item) => (
         <li
           key={item}
@@ -125,7 +131,7 @@ export function OrderedList({ items }: { items: string[] }) {
 
 export function Subhead({ children }: { children: ReactNode }) {
   return (
-    <h3 className="text-xl font-medium tracking-tight text-white">
+    <h3 className="mb-4 mt-10 max-w-3xl text-xl font-medium tracking-tight text-zinc-100">
       {children}
     </h3>
   );
@@ -141,11 +147,11 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="mt-16 border-t border-zinc-800 pt-16">
-      <h2 className="text-2xl font-medium tracking-tight text-white md:text-3xl">
+    <section id={id} className="scroll-mt-28">
+      <h2 className="mt-16 border-t border-white/10 pt-16 text-2xl font-semibold tracking-tight text-white md:text-3xl">
         {title}
       </h2>
-      <div className="mt-6 flex flex-col gap-6">{children}</div>
+      <div className="mt-8 flex min-w-0 flex-col gap-6">{children}</div>
     </section>
   );
 }
@@ -158,7 +164,7 @@ export function SourceQuote({
   source: string;
 }) {
   return (
-    <blockquote className="border-l border-white/10 pl-6">
+    <blockquote className="max-w-3xl border-l border-white/10 pl-6">
       <p className="text-base leading-relaxed text-zinc-300">
         <Rich text={quote} />
       </p>
@@ -252,16 +258,7 @@ export function SchemaBlock({
   caption: string;
   source: string;
 }) {
-  return (
-    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50">
-      <figcaption className="border-b border-white/10 px-6 py-4 text-sm leading-relaxed text-zinc-400">
-        {caption}
-      </figcaption>
-      <pre className="overflow-x-auto p-6 text-sm leading-relaxed text-zinc-300">
-        <code className="font-mono">{source}</code>
-      </pre>
-    </figure>
-  );
+  return <SchemaDisclosure caption={caption} source={source} />;
 }
 
 export function Figure({
@@ -272,6 +269,7 @@ export function Figure({
   caption,
   priority = false,
   contained = false,
+  className,
 }: {
   src: string;
   alt: string;
@@ -280,9 +278,12 @@ export function Figure({
   caption?: ReactNode;
   priority?: boolean;
   contained?: boolean;
+  className?: string;
 }) {
   return (
-    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50">
+    <figure
+      className={`flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 ${className ?? ""}`}
+    >
       <Image
         src={src}
         alt={alt}
@@ -292,16 +293,16 @@ export function Figure({
         sizes={
           contained
             ? "(min-width: 768px) 320px, 70vw"
-            : "(min-width: 1024px) 768px, 100vw"
+            : "(min-width: 1280px) 1152px, 100vw"
         }
         className={
           contained
-            ? "mx-auto h-auto w-full max-w-xs object-contain"
-            : "h-auto w-full"
+            ? "mx-auto h-auto w-full max-w-xs shrink-0 object-contain"
+            : "h-auto w-full shrink-0"
         }
       />
       {caption ? (
-        <figcaption className="border-t border-white/10 bg-zinc-950 px-6 py-4 text-sm leading-relaxed text-zinc-400">
+        <figcaption className="mt-auto border-t border-white/10 bg-zinc-950 px-6 py-4 text-sm leading-relaxed text-zinc-400">
           {caption}
         </figcaption>
       ) : null}

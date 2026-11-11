@@ -4,16 +4,19 @@ import { BulletList, Figure, Prose, Rich, Section } from "../prose";
 export default function InteractionSection() {
   return (
     <Section
-      id="interaction"
+      id="section-3"
       title={
         <>
           3. Interaction Design & Native Android Architecture (
-          <code className="font-mono text-[0.85em]">v0.2.3</code> Flow Map)
+          <code className="rounded border border-white/10 bg-zinc-900 px-1.5 py-0.5 font-mono text-[0.85em] text-emerald-300/90">
+            v0.2.3
+          </code>{" "}
+          Flow Map)
         </>
       }
     >
       <Prose text="Because **Time-Poor Altruist** volunteers are the logistical lynchpin of the ecosystem, their mobile workflow had to be push-based, mistake-proof, and executable in under 30 seconds. Rather than drawing static screens in isolation, I architected the original **v0.2.3 Volunteer Flow Map** around native Android OS lifecycle primitives—directly evolving the geo-locative Android Lollipop codebase I built for *SafeDeliver* at Vendus Labs (`SafeDeliver Host` layers in `foodsdiagram.sketch`) and mapping out Java/XML execution states by hand (`SplashScreen -> Run Asynctask?`, `LoginApi, GCS, login-signup-Activity.java`, `dashboard/welcome-page.java / xml / appcompat / menu`, `Recycler/adapter/View`, and `hasAddress -> openMapDriveTo`) to account for physical-world failure constraints:" />
-      <ol className="flex list-decimal flex-col gap-6 pl-6 marker:text-zinc-400">
+      <ol className="flex max-w-3xl list-decimal flex-col gap-6 pl-6 marker:text-zinc-400">
         <li className="pl-2 text-base leading-relaxed text-zinc-300">
           <Rich text={'**Epistemic Onboarding (`firebase_auth`) & The "Pilot\'s Checklist" (`Loc, Bag, Gas Check-In`):**'} />
           <div className="mt-4">
@@ -67,24 +70,26 @@ export default function InteractionSection() {
         </li>
       </ol>
       <FoodShareHandshakeModule />
-      <Figure
-        src="/images/foodshare/foodshare-v023-flowmap.jpg"
-        alt="Photograph of the FoodShare Volunteer Mobile App Diagram and Map v0.2.3, with the Loc, Bag, Gas check-in node and handwritten Java and XML notes."
-        width={750}
-        height={1000}
-        caption={
-          <Rich text="Physical primary-source photograph of the **FoodShare Volunteer Mobile App Diagram/Map v0.2.3** showing the `Loc, Bag, Gas Check-in` node and handwritten Java/XML lifecycle annotations (`Run Asynctask?`, `login-signup-Activity.java`, `Recycler/adapter/View`)." />
-        }
-      />
-      <Figure
-        src="/images/foodshare/sketch-volunteer-ui-canvas.png"
-        alt="foodsdiagram.sketch artboard of the volunteer Android screens, from the dashboard through later copies, with bottom action bars and confirmation modals."
-        width={1856}
-        height={1708}
-        caption={
-          <Rich text="Native `foodsdiagram.sketch` vector artboard canvas (`Android...ashboard` through `Copy 16`) showing the bottom-anchored Fitts's Law action bars and mistake-proof confirmation modals." />
-        }
-      />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <Figure
+          src="/images/foodshare/foodshare-v023-flowmap.jpg"
+          alt="Photograph of the FoodShare Volunteer Mobile App Diagram and Map v0.2.3, with the Loc, Bag, Gas check-in node and handwritten Java and XML notes."
+          width={750}
+          height={1000}
+          caption={
+            <Rich text="Physical primary-source photograph of the **FoodShare Volunteer Mobile App Diagram/Map v0.2.3** showing the `Loc, Bag, Gas Check-in` node and handwritten Java/XML lifecycle annotations (`Run Asynctask?`, `login-signup-Activity.java`, `Recycler/adapter/View`)." />
+          }
+        />
+        <Figure
+          src="/images/foodshare/sketch-volunteer-ui-canvas.png"
+          alt="foodsdiagram.sketch artboard of the volunteer Android screens, from the dashboard through later copies, with bottom action bars and confirmation modals."
+          width={1856}
+          height={1708}
+          caption={
+            <Rich text="Native `foodsdiagram.sketch` vector artboard canvas (`Android...ashboard` through `Copy 16`) showing the bottom-anchored Fitts's Law action bars and mistake-proof confirmation modals." />
+          }
+        />
+      </div>
       <Figure
         src="/images/foodshare/foodshare-android-dev-grid.png"
         alt="Six-panel build-in-public grid of the volunteer dashboard drawer, Material Design type scale, and a Firebase FriendlyChat message reading FoodShare will succeed."

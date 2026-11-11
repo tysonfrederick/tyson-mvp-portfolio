@@ -47,7 +47,7 @@ const LOOP_ROWS = [
 export default function EcosystemSection() {
   return (
     <Section
-      id="ecosystem"
+      id="section-2"
       title="2. Ecosystem Architecture: The 4-Sided Marketplace & Hybrid Social Enterprise"
     >
       <SourceQuote

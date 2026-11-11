@@ -84,7 +84,7 @@ const GTM_ROWS = [
 export default function VentureSection() {
   return (
     <Section
-      id="venture"
+      id="section-5"
       title="5. Venture Economics, Growth Telemetry & The 2017–2026 Architectural Evolution"
     >
       <Prose text="A four-sided marketplace cannot scale globally on day one; it requires localized **Marketplace Liquidity** across all four nodes simultaneously. In my original Kickstarter specification, I engineered a transparent **$100,000 Cap-Ex / Op-Ex Venture Budget** paired with a **3-Phase Geo-Fenced Rollout Strategy** and empirical **A/B Paid Acquisition Testing**:" />

@@ -87,11 +87,11 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
         <p className="line-clamp-2 text-sm leading-relaxed text-gray-300">
           {project.description}
         </p>
-        <ul className="flex flex-nowrap gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <ul className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <li
               key={tag}
-              className="shrink-0 rounded-full bg-white/10 px-4 py-2 text-xs font-medium whitespace-nowrap text-white"
+              className="rounded-full bg-white/10 px-4 py-2 text-xs font-medium whitespace-nowrap text-white"
             >
               {tag}
             </li>

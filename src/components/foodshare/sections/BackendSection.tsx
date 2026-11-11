@@ -8,8 +8,7 @@ import {
   Subhead,
 } from "../prose";
 
-const SCHEMA = `-- Production PostgreSQL / PostGIS Core Schema Excerpt
-CREATE TYPE user_role AS ENUM ('donor', 'volunteer', 'recipient', 'patron');
+const SCHEMA = `CREATE TYPE user_role AS ENUM ('donor', 'volunteer', 'recipient', 'patron');
 CREATE TYPE share_status AS ENUM ('pending_match', 'scheduled', 'en_route_pickup', 'picked_up', 'delivered', 'cancelled');
 CREATE TYPE food_category AS ENUM ('raw_vegetables', 'unperishable_cans', 'unperishable_meat', 'baked_goods', 'prepared_meals');
 
@@ -68,7 +67,7 @@ const AI_ROWS = [
 export default function BackendSection() {
   return (
     <Section
-      id="backend"
+      id="section-4"
       title="4. Production Backend: The Atomic 4-Way Handshake & 2026 AI Retrofit"
     >
       <SourceQuote
@@ -88,7 +87,7 @@ export default function BackendSection() {
         ]}
       />
       <SchemaBlock
-        caption="Production PostgreSQL / PostGIS Core Schema Excerpt"
+        caption="Production PostgreSQL / PostGIS Core Schema Excerpt — Click to Expand/Collapse SQL (27 Lines)"
         source={SCHEMA}
       />
       <Subhead>2. The 2026 AI & Operational Telemetry Matrix</Subhead>
