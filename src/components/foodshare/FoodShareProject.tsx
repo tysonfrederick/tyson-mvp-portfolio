@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ProjectStudyFrame from "@/components/ProjectStudyFrame";
 import { foodshareMeta } from "@/app/projects/studies";
+import FoodShareStageTicker from "./FoodShareStageTicker";
 import { BulletList, MetaField, Rich } from "./prose";
 import OriginSection from "./sections/OriginSection";
 import EcosystemSection from "./sections/EcosystemSection";
@@ -31,14 +32,6 @@ const QUICK_SCAN = [
   },
 ];
 
-const CHAPTERS = [
-  { href: "#section-1", label: "01 Origin & Tax Math" },
-  { href: "#section-2", label: "02 4-Sided Ecosystem" },
-  { href: "#section-3", label: "03 Somatic Android UI" },
-  { href: "#section-4", label: "04 PostGIS & 2026 AI" },
-  { href: "#section-5", label: "05 Venture & Provenance" },
-];
-
 const SKIM = [
   "**The Lived Problem & Macro Gap:** While finishing my MFA at SJSU and working as a driver across three major geo-locative delivery platforms (DoorDash, Lyft, and Postmates/Google Express), I witnessed a stark daily paradox: handing out blankets and socks during a freezing downtown San Jose cold snap, then delivering **$50 lunches in affluent Los Gatos** days later while restaurants trashed trays of fresh surplus food. Nationally, **31%–38% of the U.S. food supply ($382B / 73.9M tons, or 442 lbs per person)** goes uneaten while **47.4 million Americans (13.5% of households)** face food insecurity. Crucially, **less than 2% of edible surplus food is donated while 85% goes to landfills**, because traditional food banks are optimized for pallet-sized grocery loads—leaving a massive gap in **hyper-local, small-batch last-mile logistics (down to 5 lbs/week)**.",
   '**The Economic Breakthrough ("The Patron Loop" & Natural Capitalism):** Most charity apps fail because they rely purely on altruism and tax write-offs, falling victim to the "Non-Profit Starvation Cycle". My field interviews with restaurant owners revealed that what they value most from apps like DoorDash is **new customer acquisition**. Grounded in *Natural Capitalism*, I architected a **4-sided hybrid marketplace** where `FoodShare.co` (For-Profit SaaS with size-tiered monthly subscriptions and "DoorDash-lite" paid delivery kickbacks) drives paying, socially conscious diners (**Patrons**) to local restaurants, directly subsidizing `FoodShare.work` (501(c)(3) free rescue logistics).',
@@ -50,24 +43,24 @@ export default function FoodShareProject() {
     <ProjectStudyFrame
       title={foodshareMeta.title}
       belowTitle={
-        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-400 md:text-xl">
+        <p className="mx-auto mt-6 w-full max-w-3xl text-left text-lg leading-relaxed text-zinc-400 md:text-xl">
           <Rich text="From Seed to Scale: How lived experience across three gig-economy delivery platforms and industrial logistics auditing led me to architect a self-sustaining economy—bridging a for-profit SaaS customer-acquisition engine (`FoodShare.co`) with a 501(c)(3) last-mile rescue network (`FoodShare.work`)." />
         </p>
       }
     >
       <figure className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50">
-        <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center md:p-8">
-          <div className="inline-flex shrink-0 self-start rounded-2xl bg-white p-2 shadow-md">
+        <div className="flex items-center gap-4 p-6 md:p-8">
+          <div className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white p-1.5 shadow-md">
             <Image
               src="/images/foodshare/fs-logo4.2.1.png"
               alt="FoodShare fs monogram, a continuous ribbon in four segments."
               width={514}
               height={744}
               priority
-              className="h-28 w-auto"
+              className="h-full w-full object-contain"
             />
           </div>
-          <figcaption className="max-w-3xl text-sm leading-relaxed text-zinc-400">
+          <figcaption className="min-w-0 text-left text-sm leading-relaxed text-zinc-400">
             <Rich text="The original 2016 FoodShare monogram (`fs`): a single continuous ribbon divided into four color-coded segments representing Donors (`Fd`), Volunteers (`Fv`), Recipients (`Fr`), and Patrons (`Fi`)." />
           </figcaption>
         </div>
@@ -104,22 +97,9 @@ export default function FoodShareProject() {
         </section>
       </div>
 
-      <nav
-        aria-label="Case study chapters"
-        className="sticky top-4 z-30 mb-12 mt-8 flex items-center gap-2 overflow-x-auto rounded-full border border-white/10 bg-zinc-950/85 px-4 py-2 no-scrollbar backdrop-blur-md"
-      >
-        {CHAPTERS.map((chapter) => (
-          <a
-            key={chapter.href}
-            href={chapter.href}
-            className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium tracking-tight text-zinc-300 transition-colors duration-500 ease-in-out hover:bg-white/10 hover:text-white"
-          >
-            {chapter.label}
-          </a>
-        ))}
-      </nav>
+      <FoodShareStageTicker />
 
-      <div className="mx-auto w-full min-w-0 max-w-6xl">
+      <div className="mx-auto w-full min-w-0 max-w-5xl">
         <OriginSection />
         <EcosystemSection />
         <InteractionSection />

@@ -92,7 +92,7 @@ export default function VentureSection() {
         1. The $100,000 0-to-1 Venture Allocation & Dedicated Hardware Fleet
       </Subhead>
       <Prose text="Rather than assuming busy restaurant cooks or shelter workers would use personal phones on the line, I budgeted **$10,000 for a dedicated fleet of kitchen/shelter Android tablets** pre-configured to wake and alert staff *only* when the 4-Way Handshake condition (Share + Driver + Recipient) was active:" />
-      <DataTable headers={BUDGET_HEADERS} rows={BUDGET_ROWS} />
+      <DataTable compact headers={BUDGET_HEADERS} rows={BUDGET_ROWS} />
       <Subhead>2. The 3-Phase &quot;Bowling Pin&quot; Liquidity Roadmap</Subhead>
       <BulletList
         items={[
@@ -106,7 +106,12 @@ export default function VentureSection() {
         & Micro-Budget A/B Testing (2016–2017)
       </Subhead>
       <Prose text="During a concentrated two-month pre-launch growth sprint, I treated customer and partner acquisition as an empirical engineering problem—wiring `foodshare.co` and `foodshare.co/partner.html` into **Google Analytics** (`Active Users` real-time funnel tracking), optimizing search-index SEO keywords around food insecurity and commercial waste, and running structured A/B paid acquisition experiments across Facebook and Instagram/X (`@foodshareco`):" />
-      <DataTable headers={GTM_HEADERS} rows={GTM_ROWS} />
+      <DataTable
+        compact
+        badgeIndex={2}
+        headers={GTM_HEADERS}
+        rows={GTM_ROWS}
+      />
       <Figure
         src="/images/foodshare/foodshare-fb-ab-test-analytics.png"
         alt="2017 Facebook Promotions dashboard showing the FoodShare local ad tests, reach, and cost per thousand impressions."

@@ -232,6 +232,23 @@ export default function FoodShareOrchestrationDiagram() {
     return () => window.clearInterval(id);
   }, [inView, paused]);
 
+  useEffect(() => {
+    function onSetStage(event: Event) {
+      const next = (event as CustomEvent<{ stage?: number }>).detail?.stage;
+      if (typeof next !== "number" || next < 0 || next >= STAGES.length) return;
+      setTick(next * 2);
+      setPaused(true);
+    }
+    window.addEventListener("foodshare-set-stage", onSetStage);
+    return () => window.removeEventListener("foodshare-set-stage", onSetStage);
+  }, []);
+
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("foodshare-stage-change", { detail: { stage } }),
+    );
+  }, [stage]);
+
   const cycle = STAGES[stage];
   const somatic = somaticIndex(stage, dispatchBeat);
   const coOn = stage === 3;
@@ -266,7 +283,7 @@ export default function FoodShareOrchestrationDiagram() {
       `}</style>
 
       <div className="rounded-2xl bg-[linear-gradient(to_right,#1e293b22_1px,transparent_1px),linear-gradient(to_bottom,#1e293b22_1px,transparent_1px)] bg-[size:24px_24px] p-4 md:p-6">
-        <div className="sticky top-16 z-20 -mx-4 flex flex-col gap-4 border-b border-slate-800/80 bg-[#080B16]/95 px-4 py-3 backdrop-blur-md md:static md:mx-0 md:flex-row md:items-center md:justify-between md:border-slate-800/80 md:bg-transparent md:px-0 md:py-0 md:pb-4 md:backdrop-blur-none">
+        <div className="static flex flex-col gap-4 border-b border-slate-800/80 pb-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-[10px] font-medium tracking-[0.16em] text-slate-500 uppercase">
               {inView && !paused ? "Live cycle" : "Cycle held"}

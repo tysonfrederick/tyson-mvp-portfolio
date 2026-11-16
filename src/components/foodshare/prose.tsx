@@ -12,6 +12,14 @@ function findItalicEnd(text: string, from: number): number {
   return -1;
 }
 
+const COLOR_PILL: Record<string, string> = {
+  Green:
+    "mr-1 inline-block align-middle bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 px-1.5 py-0.5 rounded text-[11px] font-mono",
+  Blue: "mr-1 inline-block align-middle bg-blue-500/15 text-blue-300 border border-blue-500/30 px-1.5 py-0.5 rounded text-[11px] font-mono",
+  Orange:
+    "mr-1 inline-block align-middle bg-amber-500/15 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded text-[11px] font-mono",
+};
+
 function renderInline(text: string, key: string): ReactNode[] {
   const nodes: ReactNode[] = [];
   let buffer = "";
@@ -24,6 +32,21 @@ function renderInline(text: string, key: string): ReactNode[] {
   };
 
   for (let index = 0; index < text.length; ) {
+    const colorToken = text.slice(index).match(/^(?:\*\[(Green|Blue|Orange)\]\*|\[(Green|Blue|Orange)\])/);
+    if (colorToken) {
+      flush();
+      const name = (colorToken[1] ?? colorToken[2]) as keyof typeof COLOR_PILL;
+      const id = `${key}-swatch${serial}`;
+      serial += 1;
+      nodes.push(
+        <span key={id} className={COLOR_PILL[name]}>
+          {name}
+        </span>,
+      );
+      index += colorToken[0].length;
+      continue;
+    }
+
     if (text.startsWith("**", index)) {
       const end = text.indexOf("**", index + 2);
       if (end !== -1) {
@@ -87,7 +110,9 @@ export function Rich({ text }: { text: string }) {
 
 export function P({ children }: { children: ReactNode }) {
   return (
-    <p className="max-w-3xl text-base leading-relaxed text-zinc-300">{children}</p>
+    <p className="mx-auto w-full max-w-3xl text-left text-base leading-relaxed text-zinc-300">
+      {children}
+    </p>
   );
 }
 
@@ -101,7 +126,7 @@ export function Prose({ text }: { text: string }) {
 
 export function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="flex max-w-3xl flex-col gap-4">
+    <ul className="mx-auto flex w-full max-w-3xl flex-col gap-4 text-left">
       {items.map((item) => (
         <li
           key={item}
@@ -116,7 +141,7 @@ export function BulletList({ items }: { items: string[] }) {
 
 export function OrderedList({ items }: { items: string[] }) {
   return (
-    <ol className="flex max-w-3xl list-decimal flex-col gap-4 pl-6 marker:text-zinc-400">
+    <ol className="mx-auto flex w-full max-w-3xl list-decimal flex-col gap-4 pl-6 text-left marker:text-zinc-400">
       {items.map((item) => (
         <li
           key={item}
@@ -131,7 +156,7 @@ export function OrderedList({ items }: { items: string[] }) {
 
 export function Subhead({ children }: { children: ReactNode }) {
   return (
-    <h3 className="mb-4 mt-10 max-w-3xl text-xl font-medium tracking-tight text-zinc-100">
+    <h3 className="mx-auto mb-4 mt-10 w-full max-w-3xl text-left text-xl font-medium tracking-tight text-zinc-100">
       {children}
     </h3>
   );
@@ -147,10 +172,12 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-28">
-      <h2 className="mt-16 border-t border-white/10 pt-16 text-2xl font-semibold tracking-tight text-white md:text-3xl">
-        {title}
-      </h2>
+    <section id={id} className="scroll-mt-20">
+      <div className="mt-16 border-t border-white/10 pt-16">
+        <h2 className="mx-auto w-full max-w-3xl text-left text-2xl font-semibold tracking-tight text-white md:text-3xl">
+          {title}
+        </h2>
+      </div>
       <div className="mt-8 flex min-w-0 flex-col gap-6">{children}</div>
     </section>
   );
@@ -164,7 +191,7 @@ export function SourceQuote({
   source: string;
 }) {
   return (
-    <blockquote className="max-w-3xl border-l border-white/10 pl-6">
+    <blockquote className="mx-auto w-full max-w-3xl border-l border-white/10 pl-6 text-left">
       <p className="text-base leading-relaxed text-zinc-300">
         <Rich text={quote} />
       </p>
@@ -178,9 +205,13 @@ export function SourceQuote({
 export function DataTable({
   headers,
   rows,
+  compact = false,
+  badgeIndex = 1,
 }: {
   headers: string[];
   rows: string[][];
+  compact?: boolean;
+  badgeIndex?: number;
 }) {
   return (
     <>
@@ -188,22 +219,49 @@ export function DataTable({
         {rows.map((row) => (
           <div
             key={row[0]}
-            className="rounded-2xl border border-white/10 bg-zinc-900/50 p-6"
+            className={`rounded-2xl border border-white/10 bg-zinc-900/50 ${
+              compact ? "p-4" : "p-6"
+            }`}
           >
-            <p className="text-base font-medium tracking-tight text-white">
-              <Rich text={row[0]} />
-            </p>
-            <dl className="mt-6 flex flex-col gap-6">
-              {row.slice(1).map((cell, index) => (
-                <div key={headers[index + 1]}>
-                  <dt className="text-xs font-medium tracking-tight text-zinc-400">
-                    {headers[index + 1]}
-                  </dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-zinc-300">
-                    <Rich text={cell} />
-                  </dd>
-                </div>
-              ))}
+            {compact ? (
+              <div className="flex items-center justify-between gap-2">
+                <p className="min-w-0 text-sm font-medium tracking-tight text-white">
+                  <Rich text={row[0]} />
+                </p>
+                <p className="shrink-0 rounded-full border border-white/15 bg-black/40 px-2 py-0.5 text-[11px] font-medium tracking-tight text-white">
+                  <Rich text={row[badgeIndex] ?? ""} />
+                </p>
+              </div>
+            ) : (
+              <p className="text-base font-medium tracking-tight text-white">
+                <Rich text={row[0]} />
+              </p>
+            )}
+            <dl
+              className={
+                compact
+                  ? "mt-3 flex flex-col gap-3"
+                  : "mt-6 flex flex-col gap-6"
+              }
+            >
+              {row.slice(1).map((cell, index) => {
+                const headerIndex = index + 1;
+                if (compact && headerIndex === badgeIndex) return null;
+                return (
+                  <div key={headers[headerIndex]}>
+                    <dt className="text-xs font-medium tracking-tight text-zinc-400">
+                      {headers[headerIndex]}
+                    </dt>
+                    <dd
+                      className={`text-sm leading-relaxed text-zinc-300 ${
+                        compact ? "mt-1" : "mt-2"
+                      }`}
+                    >
+                      <Rich text={cell} />
+                    </dd>
+                  </div>
+                );
+              })}
             </dl>
           </div>
         ))}
@@ -270,6 +328,7 @@ export function Figure({
   priority = false,
   contained = false,
   viewport = false,
+  sheet = false,
   className,
 }: {
   src: string;
@@ -280,13 +339,26 @@ export function Figure({
   priority?: boolean;
   contained?: boolean;
   viewport?: boolean;
+  sheet?: boolean;
   className?: string;
 }) {
   return (
     <figure
       className={`flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 ${className ?? ""}`}
     >
-      {viewport ? (
+      {sheet ? (
+        <div className="flex w-full items-center justify-center bg-zinc-950/80 p-2">
+          <Image
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            priority={priority}
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="h-auto max-h-[420px] w-full object-contain md:h-[400px]"
+          />
+        </div>
+      ) : viewport ? (
         <div className="relative flex h-[340px] w-full items-center justify-center overflow-hidden rounded-xl bg-zinc-950/80 p-2 md:h-[400px]">
           <Image
             src={src}

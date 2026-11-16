@@ -66,6 +66,11 @@ export default function FoodShareHandshakeModule() {
     setConfirmed(index === 5);
   }
 
+  function shift(delta: number) {
+    const next = Math.min(STEPS.length - 1, Math.max(0, step + delta));
+    selectStep(next);
+  }
+
   function selectMode(next: Mode) {
     setMode(next);
     setModal(false);
@@ -79,15 +84,15 @@ export default function FoodShareHandshakeModule() {
   const showMap = mode === "triage" && step === 1 && !modal;
 
   return (
-    <div className="rounded-2xl border border-slate-800/80 bg-[#080B16] p-6 md:p-8">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:items-start">
+    <div className="rounded-2xl border border-slate-800/80 bg-[#080B16] p-4 lg:p-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:items-start lg:gap-8">
         <div className="mx-auto w-full max-w-sm lg:mx-0">
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               aria-pressed={mode === "ambient"}
               onClick={() => selectMode("ambient")}
-              className={`rounded-xl px-3 py-3 text-left transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+              className={`rounded-xl px-3 py-2 text-left transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:py-3 ${
                 mode === "ambient"
                   ? "bg-slate-800 text-white"
                   : "border border-dashed border-slate-800 text-slate-500"
@@ -104,7 +109,7 @@ export default function FoodShareHandshakeModule() {
               type="button"
               aria-pressed={mode === "triage"}
               onClick={() => selectMode("triage")}
-              className={`rounded-xl px-3 py-3 text-left transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+              className={`rounded-xl px-3 py-2 text-left transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:py-3 ${
                 mode === "triage"
                   ? "bg-amber-500/15 text-amber-50 shadow-lg shadow-amber-500/20"
                   : "border border-dashed border-slate-800 text-slate-500"
@@ -120,11 +125,11 @@ export default function FoodShareHandshakeModule() {
           </div>
 
           <div
-            className={`relative mt-4 overflow-hidden rounded-[1.6rem] border border-slate-800 bg-black transition-all duration-500 ease-in-out ${
-              mode === "ambient" ? "min-h-[460px]" : "min-h-[560px]"
+            className={`relative mt-4 h-[300px] overflow-hidden rounded-[1.6rem] border border-slate-800 bg-black transition-all duration-500 ease-in-out lg:h-auto ${
+              mode === "ambient" ? "lg:min-h-[460px]" : "lg:min-h-[560px]"
             }`}
           >
-            <div className="flex h-full min-h-[inherit] flex-col bg-[linear-gradient(to_right,#1e293b22_1px,transparent_1px),linear-gradient(to_bottom,#1e293b22_1px,transparent_1px)] bg-[size:24px_24px] p-4">
+            <div className="flex h-full min-h-[inherit] flex-col overflow-y-auto bg-[linear-gradient(to_right,#1e293b22_1px,transparent_1px),linear-gradient(to_bottom,#1e293b22_1px,transparent_1px)] bg-[size:24px_24px] p-4">
               <div className="flex items-center justify-between">
                 <p className="font-mono text-[10px] tracking-[0.18em] text-slate-500">
                   FOODSHARE.WORK
@@ -203,7 +208,7 @@ export default function FoodShareHandshakeModule() {
                   ) : null}
 
                   {showMap ? (
-                    <div className="relative min-h-40 flex-1 overflow-hidden rounded-xl border border-slate-800 bg-[#0c1224]">
+                    <div className="relative min-h-24 flex-1 overflow-hidden rounded-xl border border-slate-800 bg-[#0c1224] lg:min-h-40">
                       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b55_1px,transparent_1px),linear-gradient(to_bottom,#1e293b55_1px,transparent_1px)] bg-[size:24px_24px]" />
                       <div className="absolute top-1/3 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-emerald-400 shadow-[0_0_16px_#10B981]" />
                       <p className="absolute right-3 bottom-3 left-3 text-[10px] font-medium tracking-[0.14em] text-slate-400 uppercase">
@@ -228,7 +233,7 @@ export default function FoodShareHandshakeModule() {
                   ) : null}
 
                   {!showImpact && !showGps && !showMap && !showChecklist ? (
-                    <div className="relative min-h-36 flex-1 overflow-hidden rounded-xl border border-slate-800 bg-[#0c1224]">
+                    <div className="relative min-h-24 flex-1 overflow-hidden rounded-xl border border-slate-800 bg-[#0c1224] lg:min-h-36">
                       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b55_1px,transparent_1px),linear-gradient(to_bottom,#1e293b55_1px,transparent_1px)] bg-[size:24px_24px]" />
                       <p className="absolute right-3 bottom-3 left-3 text-xs leading-relaxed text-slate-400">
                         hasAddress → openMapDriveTo
@@ -243,7 +248,7 @@ export default function FoodShareHandshakeModule() {
                         setModal(true);
                         setStep(3);
                       }}
-                      className="mt-auto rounded-xl bg-emerald-500 px-4 py-4 text-sm font-medium tracking-tight text-slate-950 transition-all duration-500 ease-in-out hover:bg-emerald-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      className="mt-auto rounded-xl bg-emerald-500 px-4 py-3 text-sm font-medium tracking-tight text-slate-950 transition-all duration-500 ease-in-out hover:bg-emerald-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:py-4"
                     >
                       TAP TO CONFIRM PICKUP...
                     </button>
@@ -293,9 +298,65 @@ export default function FoodShareHandshakeModule() {
               </div>
             ) : null}
           </div>
+
+          <div className="lg:hidden">
+            <div className="my-2.5 grid grid-cols-6 gap-1">
+              {STEPS.map((item, index) => {
+                const selected = index === step;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-current={selected ? "step" : undefined}
+                    aria-label={`Step ${item.id} ${item.title}`}
+                    onClick={() => selectStep(index)}
+                    className={`rounded-lg py-2 font-mono text-[11px] tracking-tight transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                      selected
+                        ? "bg-white text-slate-950"
+                        : "border border-white/10 bg-zinc-900/80 text-zinc-300"
+                    }`}
+                  >
+                    {item.id}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="rounded-xl border border-white/10 bg-zinc-900/90 p-3">
+              <p className="text-sm font-medium tracking-tight text-white">
+                <span className="mr-2 font-mono text-[11px] text-zinc-500">
+                  {active.id}
+                </span>
+                {active.title}
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-zinc-400">
+                {active.system}
+              </p>
+              <p className="mt-1 font-mono text-[10px] leading-relaxed text-zinc-500">
+                {active.note}
+              </p>
+            </div>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => shift(-1)}
+                disabled={step === 0}
+                className="rounded-xl border border-white/15 px-3 py-2 text-xs font-medium tracking-tight text-white transition-all duration-500 ease-in-out hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-40"
+              >
+                ◂ Prev
+              </button>
+              <button
+                type="button"
+                onClick={() => shift(1)}
+                disabled={step === STEPS.length - 1}
+                className="rounded-xl border border-white/15 px-3 py-2 text-xs font-medium tracking-tight text-white transition-all duration-500 ease-in-out hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-40"
+              >
+                Next ▸
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div>
+        <div className="hidden lg:block">
           <p className="text-xs font-medium tracking-tight text-zinc-400">
             Native Android lifecycle · v0.2.3
           </p>
@@ -305,7 +366,7 @@ export default function FoodShareHandshakeModule() {
           <p className="mt-3 text-sm leading-relaxed text-zinc-400">
             Step {active.id} is live in the handset: {active.system}.
           </p>
-          <ol className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <ol className="mt-6 grid grid-cols-2 gap-3">
             {STEPS.map((item, index) => {
               const selected = index === step;
               return (
@@ -314,7 +375,7 @@ export default function FoodShareHandshakeModule() {
                     type="button"
                     aria-current={selected ? "step" : undefined}
                     onClick={() => selectStep(index)}
-                    className={`flex h-full w-full flex-col rounded-2xl px-4 py-4 text-left transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                    className={`flex h-full w-full flex-col rounded-2xl p-3.5 text-left transition-all duration-500 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
                       selected
                         ? "bg-white text-slate-950 shadow-lg"
                         : "border border-dashed border-slate-800 bg-slate-900/30 text-slate-300 hover:border-slate-600"
