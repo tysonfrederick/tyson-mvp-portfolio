@@ -28,7 +28,10 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
     video.addEventListener("canplay", markReady);
     return () => video.removeEventListener("canplay", markReady);
   }, [project.videoSrc]);
-  const invertFallback = project.imagePath.includes("foodshare") && !videoReady;
+  const invertFallback =
+    project.imagePath === "/foodshare.png" &&
+    Boolean(project.videoSrc) &&
+    !videoReady;
   const objectPosition =
     project.id === "ergoclick"
       ? "object-[85%_center]"
@@ -84,11 +87,11 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
         <p className="line-clamp-2 text-sm leading-relaxed text-gray-300">
           {project.description}
         </p>
-        <ul className="flex flex-nowrap gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <ul className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <li
               key={tag}
-              className="shrink-0 rounded-full bg-white/10 px-4 py-2 text-xs font-medium whitespace-nowrap text-white"
+              className="rounded-full bg-white/10 px-4 py-2 text-xs font-medium whitespace-nowrap text-white"
             >
               {tag}
             </li>

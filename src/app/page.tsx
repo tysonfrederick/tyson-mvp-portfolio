@@ -32,7 +32,12 @@ export default function Home() {
         className="mt-24 grid w-full grid-cols-1 gap-6 md:grid-cols-2"
       >
         {projects.map((project) => (
-          <BentoVideoCard key={project.id} project={project} />
+          <div
+            key={project.id}
+            className={project.slug === "foodshare" ? "h-full md:col-span-2" : "h-full"}
+          >
+            <BentoVideoCard project={project} />
+          </div>
         ))}
       </section>
     </main>
