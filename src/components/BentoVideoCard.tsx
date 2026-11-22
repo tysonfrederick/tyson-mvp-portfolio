@@ -41,7 +41,7 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
         : "object-center";
   const mediaClassName = `absolute inset-0 h-full w-full object-cover ${objectPosition} ${
     isFoodShareHero
-      ? "transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.02]"
+      ? "transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.015]"
       : "transition-transform duration-700 ease-out group-hover:scale-105"
   }${invertFallback ? " invert" : ""}`;
 

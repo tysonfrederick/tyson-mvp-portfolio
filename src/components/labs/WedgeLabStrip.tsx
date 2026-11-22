@@ -6,10 +6,10 @@ export default function WedgeLabStrip() {
   const experiments = getLabViews();
 
   return (
-    <section aria-label="From the Wedge Lab" className="mt-24">
+    <section aria-label="From the Lab" className="mt-24">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
-          From the Wedge Lab
+          From the Lab
         </h2>
         <Link
           href="/labs"
