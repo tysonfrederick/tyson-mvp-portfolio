@@ -32,15 +32,18 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
     project.imagePath === "/foodshare.png" &&
     Boolean(project.videoSrc) &&
     !videoReady;
+  const isFoodShareHero = project.slug === "foodshare";
   const objectPosition =
     project.id === "ergoclick"
       ? "object-[85%_center]"
       : project.id === "switch-journal"
         ? "object-left"
         : "object-center";
-  const mediaClassName = `absolute inset-0 h-full w-full object-cover ${objectPosition} transition-transform duration-700 ease-out group-hover:scale-105${
-    invertFallback ? " invert" : ""
-  }`;
+  const mediaClassName = `absolute inset-0 h-full w-full object-cover ${objectPosition} ${
+    isFoodShareHero
+      ? "transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.02]"
+      : "transition-transform duration-700 ease-out group-hover:scale-105"
+  }${invertFallback ? " invert" : ""}`;
 
   const card = (
     <motion.article
@@ -48,7 +51,11 @@ export default function BentoVideoCard({ project }: BentoVideoCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#090D16] transition-all duration-300 hover:-translate-y-1 hover:border-white/30"
+      className={
+        isFoodShareHero
+          ? "group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#090D16] transition-colors duration-500 ease-out hover:border-white/25"
+          : "group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#090D16] transition-all duration-300 hover:-translate-y-1 hover:border-white/30"
+      }
     >
       <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-black md:aspect-video">
         <Image
