@@ -1,3 +1,4 @@
+import Image from "next/image";
 import FoodShareHandshakeModule from "@/components/FoodShareHandshakeModule";
 import { Figure, Prose, Rich, Section } from "../prose";
 
@@ -21,6 +22,41 @@ const HANDSET_PILLS = [
     k: "04",
     title: "1 lb = 10 people",
     detail: "Impact receipt replaces a sterile end-of-shift.",
+  },
+];
+
+const MOBILE_ARTIFACTS = [
+  {
+    src: "/images/foodshare/mover-volunteer-home.png",
+    width: 720,
+    height: 1280,
+    alt: "Mover home screen greeting Mover Tyson, with four upcoming shares across Santa Cruz, Capitola/Soquel, and South San Jose, Campbell, and Los Gatos.",
+    caption:
+      "**1. Multi-Region Dispatch (2x UI):** Mover shift queue across Santa Cruz, Capitola/Soquel, and South San Jose/Campbell/Los Gatos.",
+  },
+  {
+    src: "/images/foodshare/mover-task-sequence.png",
+    width: 720,
+    height: 1280,
+    alt: "Location-synced mover task list showing a completed pickup at Iguana's by 10:30pm and a drop-off at San Jose Church of Good Things by 11:15pm.",
+    caption:
+      "**2. Time-Boxed Handoff State:** Location-synced sequential pickup (Iguana's by 10:30pm) and drop-off (San Jose Church of Good Things by 11:15pm).",
+  },
+  {
+    src: "/images/foodshare/mover-pickup-confirm.png",
+    width: 720,
+    height: 1280,
+    alt: "Pickup confirmation screen listing 1.75 lbs of broccoli, 96 oz of corn, and 10 lbs of shredded beef behind a Confirm Items and Go Back modal.",
+    caption:
+      "**3. Mistake-Proof Intake Gate:** Itemized weight verification (1.75 lbs broccoli, 96 oz corn, 10 lbs shredded beef) with high-contrast CONFIRM ITEMS / GO BACK modal.",
+  },
+  {
+    src: "/images/foodshare/android-implicit-intents-maps.jpg",
+    width: 1440,
+    height: 2960,
+    alt: "Compiled Android Implicit Intents prototype opening the system resolver so Maps or Uber can take the turn-by-turn handoff.",
+    caption:
+      "**4. Native Android Implicit Intents:** Compiled prototype triggering the OS-level geo-routing resolver (Maps / Uber) for zero-friction turn-by-turn handoff.",
   },
 ];
 
@@ -89,6 +125,29 @@ export default function InteractionSection() {
           <Rich text='Curated 3x2 build-in-public engineering grid showcasing the native `Volunteer Dashboard` navigation drawer, Material Design `56sp–16sp` typography scale, and Firebase `FriendlyChat` test payload (`"FoodShare will succeed."`).' />
         }
       />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {MOBILE_ARTIFACTS.map((artifact) => (
+          <figure
+            key={artifact.src}
+            className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/60"
+          >
+            <div className="p-2">
+              <Image
+                src={artifact.src}
+                alt={artifact.alt}
+                width={artifact.width}
+                height={artifact.height}
+                loading="lazy"
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                className="h-auto w-full rounded-xl"
+              />
+            </div>
+            <figcaption className="mt-auto border-t border-white/10 bg-zinc-950 px-6 py-4 text-sm leading-relaxed text-zinc-400">
+              <Rich text={artifact.caption} />
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </Section>
   );
 }

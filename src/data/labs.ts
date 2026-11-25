@@ -25,7 +25,7 @@ export const labExperiments: LabExperiment[] = [
     status: "Live Wedge App",
     statusTone: "amber",
     liveUrl: "https://shadow-telemetry.vercel.app",
-    screenshot: "/images/labs/shadow-telemetry.jpg",
+    screenshot: "/images/labs/shadow-telemetry.png",
     thesis:
       "Zero-typing somatic field logger that captures non-standard floor exceptions, radio triage, and invisible operational friction in <4 seconds.",
     points: [

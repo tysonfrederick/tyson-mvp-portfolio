@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   BulletList,
   DataTable,
@@ -112,15 +113,35 @@ export default function VentureSection() {
         headers={GTM_HEADERS}
         rows={GTM_ROWS}
       />
-      <Figure
-        src="/images/foodshare/foodshare-fb-ab-test-analytics.png"
-        alt="2017 Facebook Promotions dashboard showing the FoodShare local ad tests, reach, and cost per thousand impressions."
-        width={2012}
-        height={1126}
-        caption={
-          <Rich text="**2017 Growth Telemetry & A/B Ad Matrix:** Primary-source capture of the 2017 Facebook Promotions dashboard validating the 2x2 A/B experiment ($17.41 micro-spend → 5,137 local users reached and 4,792+ local impressions at ~$2.40 CPM), paired with Google Analytics (`Active Users`) real-time funnel tracking." />
-        }
-      />
+      <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div className="min-w-0 self-start">
+          <Figure
+            src="/images/foodshare/foodshare-fb-ab-test-analytics.png"
+            alt="2017 Facebook Promotions dashboard showing the FoodShare local ad tests, reach, and cost per thousand impressions."
+            width={2012}
+            height={1126}
+            caption={
+              <Rich text="**2017 Growth Telemetry & A/B Ad Matrix:** Primary-source capture of the 2017 Facebook Promotions dashboard validating the 2x2 A/B experiment ($17.41 micro-spend → 5,137 local users reached and 4,792+ local impressions at ~$2.40 CPM), paired with Google Analytics (`Active Users`) real-time funnel tracking." />
+            }
+          />
+        </div>
+        <figure className="mx-auto flex w-full max-w-xs flex-col self-start overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/60 lg:mx-0">
+          <div className="p-2">
+            <Image
+              src="/images/foodshare/foodshare-co-mobile-launch.jpg"
+              alt="Live foodshare.co mobile landing page in the browser, with the Connect for good diagram from unused food through dispatch to non-profits."
+              width={1440}
+              height={2960}
+              loading="lazy"
+              sizes="320px"
+              className="h-auto w-full rounded-xl"
+            />
+          </div>
+          <figcaption className="mt-auto border-t border-white/10 bg-zinc-950 px-6 py-4 text-sm leading-relaxed text-zinc-400">
+            <Rich text="**Live Mobile Web Launch (www.foodshare.co):** Responsive partner acquisition landing page featuring the 'Connect for good' value-chain diagram (Unused Food → Dispatch → Non-Profits) tracked via Google Analytics during the 60-day GTM sprint." />
+          </figcaption>
+        </figure>
+      </div>
       <BulletList
         items={[
           "**Total Micro-Test Efficiency & Institutional Validation:** Across just **$17.41 in validation ad spend**, the campaigns reached **5,137 local users** and generated **4,792+ targeted local impressions** (~$2.40 CPM), building a pre-launch community of **508 followers on Instagram** and **70 followers on Facebook**—and organically attracting verified institutional followers including **Marc Perrone** (International President of the 1.3-million-member **United Food & Commercial Workers / UFCW** union representing grocery and food-retail workers across North America) and **StartUp Mindset** (Top 50 Entrepreneurship publication).",
